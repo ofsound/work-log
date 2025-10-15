@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-import { projects } from '@/firebase'
-import { allTags } from '@/firebase'
+import { allProjects, allTags } from '@/firebase'
+// import { allTags } from '@/firebase'
 
 const props = defineProps({
   startTime: Date,
@@ -15,7 +15,7 @@ const props = defineProps({
 const projectName = computed(() => {
   let computedProjectName: string = ''
 
-  projects.value.forEach((thisProject) => {
+  allProjects.value.forEach((thisProject) => {
     if (thisProject.id === props.project) {
       computedProjectName = thisProject.name
     }

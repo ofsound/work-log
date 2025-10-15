@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import TimeBox from '@/components/TimeBox.vue'
 import { timeBoxes } from '@/firebase'
+
+import TimeBox from '@/components/TimeBox.vue'
+import TimeBoxAdder from '@/components/TimeBoxAdder.vue'
 </script>
 
 <template>
@@ -14,4 +16,5 @@ import { timeBoxes } from '@/firebase'
     :project="item.project"
     :tags="item.tags"
   />
+  <TimeBoxAdder />
 </template>
