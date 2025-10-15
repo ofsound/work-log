@@ -1,8 +1,16 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+defineProps({
+  startTime: Date,
+  endTime: Date,
+  notes: String,
+})
+</script>
 
 <template>
-  <h1 class="text-4xl">TimeBox</h1>
-  <div class="mt-2">start time</div>
-  <div class="mt-2">end time</div>
-  <div class="mt-2">description</div>
+  <div class="my-2 bg-gray-200 p-8">
+    <h1 class="text-4xl">TimeBox</h1>
+    <div class="mt-2">{{ startTime }}</div>
+    <div class="mt-2">{{ endTime }}</div>
+    <div class="mt-2">{{ notes }}</div>
+  </div>
 </template>
