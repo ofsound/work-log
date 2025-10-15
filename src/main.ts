@@ -1,6 +1,5 @@
 import './main.css'
 
-
 import { createApp } from 'vue'
 import { VueFire, VueFireAuth } from 'vuefire'
 import { createPinia } from 'pinia'

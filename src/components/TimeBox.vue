@@ -2,5 +2,7 @@
 
 <template>
   <h1 class="text-4xl">TimeBox</h1>
-  <p class="mt-4">here are my details</p>
+  <div class="mt-2">start time</div>
+  <div class="mt-2">end time</div>
+  <div class="mt-2">description</div>
 </template>
