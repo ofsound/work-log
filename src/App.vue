@@ -11,8 +11,8 @@ const timeBoxes = useCollection(timeBoxesRef)
   <TimeBox
     v-for="item in timeBoxes"
     :key="item.id"
-    :startTime="item.startTime"
-    :endTime="item.endTime"
+    :startTime="item.startTime.toDate()"
+    :endTime="item.endTime.toDate()"
     :notes="item.notes"
   />
 </template>
