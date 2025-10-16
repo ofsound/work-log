@@ -17,15 +17,10 @@ const tags = ref([])
 
 const clickHandler = () => {
   createDocument()
-  // console.log('create a new timeBox in Firestore')
 }
 
 async function createDocument() {
   try {
-    // Get a reference to the collection
-    // const colRef = collection(db, 'your_collection_name')
-    // Use addDoc to create a new document with an auto-generated ID
-
     const docRef = await addDoc(timeBoxesCollection, {
       startTime: Timestamp.fromDate(new Date(startTime.value)),
       endTime: Timestamp.fromDate(new Date(endTime.value)),
@@ -41,7 +36,7 @@ async function createDocument() {
 </script>
 
 <template>
-  <div class="my-2 bg-gray-200 p-8">
+  <div class="my-2 bg-amber-100 p-8">
     <div>startTime: <input type="datetime-local" v-model="startTime" placeholder="start" /></div>
     <div>endTime: <input type="datetime-local" v-model="endTime" placeholder="start" /></div>
     <div>notes: <textarea v-model="notes" class="w-full"></textarea></div>
