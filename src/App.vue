@@ -1,8 +1,12 @@
 <script setup lang="ts">
-import { timeBoxes } from '@/firebase'
+import { useCollection } from 'vuefire'
 
 import TimeBox from '@/components/TimeBox.vue'
 import TimeBoxAdder from '@/components/TimeBoxAdder.vue'
+
+import { timeBoxesCollection } from '@/firebase'
+
+const timeBoxes = useCollection(timeBoxesCollection)
 </script>
 
 <template>

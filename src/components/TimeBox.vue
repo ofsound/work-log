@@ -1,7 +1,12 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-import { allProjects, allTags } from '@/firebase'
+import { useCollection } from 'vuefire'
+
+import { projectsCollection, tagsCollection } from '@/firebase'
+
+const allProjects = useCollection(projectsCollection)
+const allTags = useCollection(tagsCollection)
 
 const props = defineProps({
   startTime: Date,
