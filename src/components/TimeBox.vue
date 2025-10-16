@@ -2,7 +2,6 @@
 import { computed } from 'vue'
 
 import { allProjects, allTags } from '@/firebase'
-// import { allTags } from '@/firebase'
 
 const props = defineProps({
   startTime: Date,
