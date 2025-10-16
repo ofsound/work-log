@@ -36,10 +36,10 @@ async function createDocument() {
 </script>
 
 <template>
-  <div class="my-2 bg-amber-100 p-8">
+  <div class="my-2 bg-amber-100 p-8 [&>*]:my-2">
     <div>startTime: <input type="datetime-local" v-model="startTime" placeholder="start" /></div>
     <div>endTime: <input type="datetime-local" v-model="endTime" placeholder="start" /></div>
-    <div>notes: <textarea v-model="notes" class="w-full"></textarea></div>
+    <div>notes: <textarea class="w-full border-1 border-black p-2" v-model="notes"></textarea></div>
     <div>
       project:
       <select v-model="project">
@@ -50,11 +50,13 @@ async function createDocument() {
     </div>
     <div>
       tags:
-      <div v-for="thisTag in allTags" :key="thisTag.id">
-        {{ thisTag.name }}
-        <input type="checkbox" :value="thisTag.id" v-model="tags" />
-      </div>
+      <span v-for="thisTag in allTags" :key="thisTag.id">
+        <label>
+          <input class="ml-4" type="checkbox" :value="thisTag.id" v-model="tags" />
+          {{ thisTag.name }}
+        </label>
+      </span>
     </div>
-    <button @click="clickHandler" class="mt-2 border border-black bg-green-300 p-2">Submit</button>
+    <button @click="clickHandler" class="mt-6 bg-black p-2 text-white">Submit</button>
   </div>
 </template>
