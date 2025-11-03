@@ -5,12 +5,17 @@ import TimeBox from '@/components/TimeBox.vue'
 import TimeBoxAdder from '@/components/TimeBoxAdder.vue'
 
 import { timeBoxesCollection } from '@/firebase'
+import ProjectsManager from './components/ProjectsManager.vue'
+import TagsManager from './components/TagsManager.vue'
 
 const timeBoxes = useCollection(timeBoxesCollection)
 </script>
 
 <template>
   <h1 class="mb-4 text-center text-2xl font-bold">Work Log</h1>
+  <ProjectsManager />
+  <TagsManager />
+  <TimeBoxAdder />
   <TimeBox
     v-for="item in timeBoxes"
     :key="item.id"
@@ -20,5 +25,4 @@ const timeBoxes = useCollection(timeBoxesCollection)
     :project="item.project"
     :tags="item.tags"
   />
-  <TimeBoxAdder />
 </template>
