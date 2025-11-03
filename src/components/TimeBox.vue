@@ -49,7 +49,7 @@ const timeBoxDuration = computed(() => {
     durationString = (props.endTime.valueOf() - props.startTime.valueOf()) / 60000
   }
 
-  return durationString
+  return durationString + 'm'
 })
 
 const startDayFormatted = computed(() => {
@@ -80,7 +80,7 @@ const endTimeFormatted = computed(() => {
 
 <template>
   <div class="my-2 bg-gray-200 p-4">
-    <div class="mt-2">{{ timeBoxDuration }}</div>
+    <div class="mt-2 w-max border-1">{{ timeBoxDuration }}</div>
     <div class="mt-2">{{ startDayFormatted }}</div>
     <div class="mt-2">{{ startTimeFormatted }} – {{ endTimeFormatted }}</div>
     <div class="mt-2">{{ notes }}</div>
