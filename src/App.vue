@@ -12,7 +12,7 @@ const timeBoxes = useCollection(timeBoxesCollection)
 </script>
 
 <template>
-  <h1 class="mb-4 text-center text-2xl font-bold">Work Log</h1>
+  <h1 class="mb-4 text-center text-2xl font-bold">WORK LOG</h1>
   <ProjectsManager />
   <TagsManager />
   <TimeBoxAdder />
