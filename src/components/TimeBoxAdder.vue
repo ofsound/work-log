@@ -15,11 +15,7 @@ const notes = ref()
 const project = ref()
 const tags = ref([])
 
-const clickHandler = () => {
-  createDocument()
-}
-
-async function createDocument() {
+const createTimeBoxDocument = async () => {
   try {
     const docRef = await addDoc(timeBoxesCollection, {
       startTime: Timestamp.fromDate(new Date(startTime.value)),
@@ -57,6 +53,6 @@ async function createDocument() {
         </label>
       </span>
     </div>
-    <button @click="clickHandler" class="mt-6 bg-black p-2 text-white">Submit</button>
+    <button @click="createTimeBoxDocument" class="mt-6 bg-black p-2 text-white">Submit</button>
   </div>
 </template>
