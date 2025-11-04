@@ -36,7 +36,7 @@ const cancelCreateAndLoseFocus = () => {
 </script>
 
 <template>
-  <div class="my-2 rounded-sm bg-blue-200 px-6 py-4 shadow-md">
+  <div class="my-4 rounded-sm bg-blue-200 px-6 py-4 shadow-md">
     <div class="mb-2 text-center text-xl font-bold uppercase">Projects</div>
     <ProjectsManagerProject
       v-for="item in allProjects"

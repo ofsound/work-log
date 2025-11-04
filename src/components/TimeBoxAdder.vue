@@ -32,7 +32,7 @@ const createTimeBoxDocument = async () => {
 </script>
 
 <template>
-  <div class="my-2 rounded-sm border border-gray-100 bg-amber-100 px-6 py-4 shadow-md [&>*]:my-2">
+  <div class="my-4 rounded-sm border border-gray-100 bg-amber-100 px-6 py-4 shadow-md [&>*]:my-2">
     <div>startTime: <input type="datetime-local" v-model="startTime" placeholder="start" /></div>
     <div>endTime: <input type="datetime-local" v-model="endTime" placeholder="start" /></div>
     <div>notes: <textarea class="w-full border-1 border-black p-2" v-model="notes"></textarea></div>

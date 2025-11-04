@@ -2,6 +2,8 @@
 import { useCollection } from 'vuefire'
 
 import HeaderBar from '@/components/HeaderBar.vue'
+// import CountdownTimer from '@/components/CountdownTimer.vue'
+import CountupTimer from '@/components/CountupTimer.vue'
 import TimeBox from '@/components/TimeBox.vue'
 import TimeBoxAdder from '@/components/TimeBoxAdder.vue'
 
@@ -15,9 +17,11 @@ const timeBoxes = useCollection(timeBoxesCollection)
 <template>
   <HeaderBar />
   <div class="px-10 py-4">
+    <!-- <CountdownTimer /> -->
+    <CountupTimer />
+    <TimeBoxAdder />
     <ProjectsManager />
     <TagsManager />
-    <TimeBoxAdder />
     <TimeBox
       v-for="item in timeBoxes"
       :key="item.id"
