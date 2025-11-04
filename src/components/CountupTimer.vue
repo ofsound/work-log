@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
+const emit = defineEmits(['setStartTime', 'setEndTime'])
+
 const timerProgress = ref('')
 let nowWhenStarted: Date
 
@@ -10,11 +12,12 @@ const startTimer = () => {
   nowWhenStarted = new Date()
   updateTime()
   timerInterval = setInterval(updateTime, 1000)
+  emit('setStartTime', new Date())
 }
 
 const endTimer = () => {
   clearInterval(timerInterval)
-  console.log('what to do, ask if you want to submit, skip focus')
+  emit('setEndTime', new Date())
 }
 
 const updateTime = () => {

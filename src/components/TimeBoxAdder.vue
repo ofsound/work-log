@@ -6,6 +6,9 @@ import { useCollection } from 'vuefire'
 
 import { projectsCollection, tagsCollection, timeBoxesCollection } from '@/firebase'
 
+import CountdownTimer from '@/components/CountdownTimer.vue'
+import CountupTimer from '@/components/CountupTimer.vue'
+
 const allProjects = useCollection(projectsCollection)
 const allTags = useCollection(tagsCollection)
 
@@ -29,9 +32,31 @@ const createTimeBoxDocument = async () => {
     console.error('Error adding document: ', e)
   }
 }
+
+const setStartTime = (timeFromTimer: Date) => {
+  startTime.value = formatToDatetimeLocal(timeFromTimer)
+}
+
+const setEndTime = (timeFromTimer: Date) => {
+  endTime.value = formatToDatetimeLocal(timeFromTimer)
+}
+
+function formatToDatetimeLocal(date: Date) {
+  const year = date.getFullYear()
+  const month = (date.getMonth() + 1).toString().padStart(2, '0')
+  const day = date.getDate().toString().padStart(2, '0')
+  const hours = date.getHours().toString().padStart(2, '0')
+  const minutes = date.getMinutes().toString().padStart(2, '0')
+
+  return `${year}-${month}-${day}T${hours}:${minutes}`
+}
 </script>
 
 <template>
+  <div class="flex [&>*]:flex-1">
+    <CountupTimer @setStartTime="setStartTime" @setEndTime="setEndTime" />
+    <CountdownTimer />
+  </div>
   <div class="my-4 rounded-sm border border-gray-100 bg-amber-100 px-6 py-4 shadow-md [&>*]:my-2">
     <div>startTime: <input type="datetime-local" v-model="startTime" placeholder="start" /></div>
     <div>endTime: <input type="datetime-local" v-model="endTime" placeholder="start" /></div>
