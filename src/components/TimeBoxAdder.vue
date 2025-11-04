@@ -53,9 +53,9 @@ function formatToDatetimeLocal(date: Date) {
 </script>
 
 <template>
-  <div class="flex [&>*]:flex-1">
+  <div class="flex gap-2 [&>*]:flex-1">
     <CountupTimer @setStartTime="setStartTime" @setEndTime="setEndTime" />
-    <CountdownTimer />
+    <CountdownTimer @setStartTime="setStartTime" @setEndTime="setEndTime" />
   </div>
   <div class="my-4 rounded-sm border border-gray-100 bg-amber-100 px-6 py-4 shadow-md [&>*]:my-2">
     <div>startTime: <input type="datetime-local" v-model="startTime" placeholder="start" /></div>
