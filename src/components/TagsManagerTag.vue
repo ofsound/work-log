@@ -57,12 +57,12 @@ const resetNameToSaved = () => {
 </script>
 
 <template>
-  <div class="flex gap-2 rounded-sm border-b-1 border-black/20 py-1">
+  <div class="flex gap-2 border-b-1 border-black/20 py-1">
     <input
       ref="myInput"
       type="text"
       v-model="dynamicName"
-      class="hover: flex-1 p-1 font-bold hover:underline focus:bg-white focus:!no-underline"
+      class="flex-1 p-1 font-bold hover:underline focus:bg-white focus:!no-underline"
       @keyup.enter="renameTagDocument"
       @keyup.esc="cancelRenameAndLoseFocus"
       @blur="resetNameToSaved"

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useCollection } from 'vuefire'
 
+import HeaderBar from '@/components/HeaderBar.vue'
 import TimeBox from '@/components/TimeBox.vue'
 import TimeBoxAdder from '@/components/TimeBoxAdder.vue'
 
@@ -12,17 +13,19 @@ const timeBoxes = useCollection(timeBoxesCollection)
 </script>
 
 <template>
-  <h1 class="mb-4 text-center text-2xl font-bold">WORK LOG</h1>
-  <ProjectsManager />
-  <TagsManager />
-  <TimeBoxAdder />
-  <TimeBox
-    v-for="item in timeBoxes"
-    :key="item.id"
-    :startTime="item.startTime.toDate()"
-    :endTime="item.endTime.toDate()"
-    :notes="item.notes"
-    :project="item.project"
-    :tags="item.tags"
-  />
+  <HeaderBar />
+  <div class="px-10 py-4">
+    <ProjectsManager />
+    <TagsManager />
+    <TimeBoxAdder />
+    <TimeBox
+      v-for="item in timeBoxes"
+      :key="item.id"
+      :startTime="item.startTime.toDate()"
+      :endTime="item.endTime.toDate()"
+      :notes="item.notes"
+      :project="item.project"
+      :tags="item.tags"
+    />
+  </div>
 </template>
