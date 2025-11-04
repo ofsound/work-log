@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, type Ref } from 'vue'
 
 import { useCollection } from 'vuefire'
 
@@ -8,6 +8,8 @@ import { addDoc } from 'firebase/firestore'
 import { projectsCollection } from '@/firebase'
 
 import ProjectsManagerProject from './ProjectsManagerProject.vue'
+
+const myInput: Ref<HTMLInputElement | null> = ref(null)
 
 const allProjects = useCollection(projectsCollection)
 
@@ -24,10 +26,17 @@ const createProjectDocument = async () => {
     console.error('Error adding document: ', e)
   }
 }
+
+const cancelCreateAndLoseFocus = () => {
+  newProjectName.value = ''
+  if (myInput.value) {
+    myInput.value.blur()
+  }
+}
 </script>
 
 <template>
-  <div class="my-2 bg-blue-200 p-4">
+  <div class="my-2 rounded-sm bg-blue-200 p-4">
     <div class="mb-2 text-center text-xl font-bold uppercase">Projects</div>
     <ProjectsManagerProject
       v-for="item in allProjects"
@@ -36,10 +45,17 @@ const createProjectDocument = async () => {
       :id="item.id"
     />
     <div class="mt-8 flex">
-      <input type="text" v-model="newProjectName" class="mr-4 flex-1 bg-white pl-2 font-bold" />
-      <div @click="createProjectDocument" class="w-max rounded-sm border px-1 font-bold">
-        + Add New
-      </div>
+      <input
+        ref="myInput"
+        class="mr-4 flex-1 bg-white pl-2 font-bold"
+        type="text"
+        v-model="newProjectName"
+        @keyup.enter="createProjectDocument"
+        @keyup.esc="cancelCreateAndLoseFocus"
+      />
+      <button class="w-max rounded-sm border px-2 font-bold" @click="createProjectDocument">
+        + New Project
+      </button>
     </div>
   </div>
 </template>

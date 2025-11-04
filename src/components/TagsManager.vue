@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, type Ref } from 'vue'
 
 import { useCollection } from 'vuefire'
 
@@ -8,6 +8,8 @@ import { addDoc } from 'firebase/firestore'
 import { tagsCollection } from '@/firebase'
 
 import TagsManagerTag from './TagsManagerTag.vue'
+
+const myInput: Ref<HTMLInputElement | null> = ref(null)
 
 const allTags = useCollection(tagsCollection)
 
@@ -24,15 +26,31 @@ const createTagDocument = async () => {
     console.error('Error adding document: ', e)
   }
 }
+
+const cancelCreateAndLoseFocus = () => {
+  newTagName.value = ''
+  if (myInput.value) {
+    myInput.value.blur()
+  }
+}
 </script>
 
 <template>
-  <div class="my-2 bg-purple-200 p-4">
+  <div class="my-2 rounded-sm bg-purple-200 p-4">
     <div class="mb-2 text-center text-xl font-bold uppercase">Tags</div>
     <TagsManagerTag v-for="item in allTags" :key="item.id" :name="item.name" :id="item.id" />
     <div class="mt-8 flex">
-      <input type="text" v-model="newTagName" class="mr-4 flex-1 bg-white pl-2 font-bold" />
-      <div @click="createTagDocument" class="w-max rounded-sm border px-1 font-bold">+ Add New</div>
+      <input
+        ref="myInput"
+        class="mr-4 flex-1 bg-white pl-2 font-bold"
+        type="text"
+        v-model="newTagName"
+        @keyup.enter="createTagDocument"
+        @keyup.esc="cancelCreateAndLoseFocus"
+      />
+      <button class="w-max rounded-sm border px-2 font-bold" @click="createTagDocument">
+        + New Tag
+      </button>
     </div>
   </div>
 </template>

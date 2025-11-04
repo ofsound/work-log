@@ -1,28 +1,87 @@
 <script setup lang="ts">
-import { doc, deleteDoc } from 'firebase/firestore'
+import { ref } from 'vue'
+
+import type { Ref } from 'vue'
+
+import { doc, deleteDoc, updateDoc } from 'firebase/firestore'
 
 import { db } from '@/firebase'
+
+const myInput: Ref<HTMLInputElement | null> = ref(null)
 
 const props = defineProps({
   name: String,
   id: { type: String, required: true },
 })
 
+const dynamicName = ref(props.name)
+
 const deleteTagDocument = async () => {
+  const confirmed = window.confirm(`Are you sure you want to delete the tag: ${props.name}?`)
+
+  if (confirmed) {
+    try {
+      const docRef = doc(db, 'tags', props.id)
+      await deleteDoc(docRef)
+      console.log('Document deleted with ID: ', docRef.id)
+    } catch (e) {
+      console.error('Error adding document: ', e)
+    }
+  } else {
+    console.log('Deletion cancelled.')
+  }
+}
+
+const renameTagDocument = async () => {
   try {
     const docRef = doc(db, 'tags', props.id)
-    await deleteDoc(docRef)
+    await updateDoc(docRef, { name: dynamicName.value })
+    if (myInput.value) {
+      myInput.value.blur()
+    }
     console.log('Document deleted with ID: ', docRef.id)
   } catch (e) {
     console.error('Error adding document: ', e)
   }
 }
+
+const cancelRenameAndLoseFocus = () => {
+  if (myInput.value) {
+    myInput.value.blur()
+  }
+}
+
+const resetNameToSaved = () => {
+  dynamicName.value = props.name
+}
 </script>
 
 <template>
-  <div class="flex gap-2 border-b-1 py-1">
-    <div class="mr-auto font-bold">{{ name }}</div>
-    <div>rename</div>
-    <div @click="deleteTagDocument">delete</div>
+  <div class="flex gap-2 rounded-sm border-b-1 border-black/20 py-1">
+    <input
+      ref="myInput"
+      type="text"
+      v-model="dynamicName"
+      class="hover: flex-1 p-1 font-bold hover:underline focus:bg-white focus:!no-underline"
+      @keyup.enter="renameTagDocument"
+      @keyup.esc="cancelRenameAndLoseFocus"
+      @blur="resetNameToSaved"
+    />
+    <button class="cursor-pointer px-1" @click="deleteTagDocument">
+      <svg
+        class="h-5 w-5"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+        ></path>
+      </svg>
+    </button>
   </div>
 </template>
