@@ -58,19 +58,35 @@ function formatToDatetimeLocal(date: Date) {
     <CountdownTimer @setStartTime="setStartTime" @setEndTime="setEndTime" />
   </div>
   <div class="my-4 rounded-sm border border-gray-100 bg-amber-100 px-6 py-4 shadow-md [&>*]:my-2">
-    <div>startTime: <input type="datetime-local" v-model="startTime" placeholder="start" /></div>
-    <div>endTime: <input type="datetime-local" v-model="endTime" placeholder="start" /></div>
-    <div>notes: <textarea class="w-full border-1 border-black p-2" v-model="notes"></textarea></div>
-    <div>
-      project:
+    <div class="flex">
+      <div class="w-16">Start:</div>
+      <input type="datetime-local" v-model="startTime" placeholder="start" />
+    </div>
+    <div class="flex">
+      <div class="w-16">End:</div>
+      <input type="datetime-local" v-model="endTime" placeholder="start" />
+    </div>
+
+    <div class="flex border-b-1 border-gray-400 py-4">
+      <textarea
+        class="w-full rounded-sm border-1 border-gray-800 p-2"
+        rows="5"
+        placeholder="Enter notes here..."
+        v-model="notes"
+      ></textarea>
+    </div>
+    <div class="flex border-b-1 border-gray-400 py-4">
+      <div class="w-16">Project:</div>
+
       <select v-model="project">
         <option v-for="thisProject in allProjects" :key="thisProject.id" :value="thisProject.id">
           {{ thisProject.name }}
         </option>
       </select>
     </div>
-    <div>
-      tags:
+    <div class="flex border-b-1 border-gray-400 py-4">
+      <div class="w-16">Tags:</div>
+
       <span v-for="thisTag in allTags" :key="thisTag.id">
         <label>
           <input class="ml-4" type="checkbox" :value="thisTag.id" v-model="tags" />
@@ -78,6 +94,11 @@ function formatToDatetimeLocal(date: Date) {
         </label>
       </span>
     </div>
-    <button @click="createTimeBoxDocument" class="mt-6 bg-black p-2 text-white">Submit</button>
   </div>
+  <button
+    @click="createTimeBoxDocument"
+    class="w-full rounded-sm bg-gray-400 p-2 font-bold tracking-wide text-white shadow-[inset_0_2px_0_rgba(255,255,255,0.3),inset_0_-2px_0_rgba(0,0,0,0.2),0_4px_6px_rgba(0,0,0,0.1)]"
+  >
+    Log Session
+  </button>
 </template>
