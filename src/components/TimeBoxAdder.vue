@@ -41,7 +41,7 @@ const setEndTime = (timeFromTimer: Date) => {
   endTime.value = formatToDatetimeLocal(timeFromTimer)
 }
 
-function formatToDatetimeLocal(date: Date) {
+const formatToDatetimeLocal = (date: Date) => {
   const year = date.getFullYear()
   const month = (date.getMonth() + 1).toString().padStart(2, '0')
   const day = date.getDate().toString().padStart(2, '0')
@@ -77,7 +77,6 @@ function formatToDatetimeLocal(date: Date) {
     </div>
     <div class="flex border-b-1 border-gray-400 py-4">
       <div class="w-16">Project:</div>
-
       <select v-model="project">
         <option v-for="thisProject in allProjects" :key="thisProject.id" :value="thisProject.id">
           {{ thisProject.name }}
@@ -97,7 +96,7 @@ function formatToDatetimeLocal(date: Date) {
   </div>
   <button
     @click="createTimeBoxDocument"
-    class="w-full rounded-sm bg-gray-400 p-2 font-bold tracking-wide text-white shadow-[inset_0_2px_0_rgba(255,255,255,0.3),inset_0_-2px_0_rgba(0,0,0,0.2),0_4px_6px_rgba(0,0,0,0.1)]"
+    class="w-full rounded-sm bg-gray-400 p-2 font-bold tracking-wide text-white shadow-[inset_0_2px_0_rgba(255,255,255,0.3),inset_0_-2px_0_rgba(20,20,20,0.1),0_4px_6px_rgba(0,0,0,0.1)]"
   >
     Log Session
   </button>
