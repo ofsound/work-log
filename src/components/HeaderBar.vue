@@ -4,8 +4,7 @@ import { ref } from 'vue'
 const currentTime = ref('')
 
 const updateTime = () => {
-  const now = new Date()
-  currentTime.value = now.toLocaleTimeString([], { timeStyle: 'short' })
+  currentTime.value = new Date().toLocaleTimeString([], { timeStyle: 'short' })
 }
 
 updateTime()
@@ -13,8 +12,14 @@ setInterval(updateTime, 1000)
 </script>
 
 <template>
-  <div class="mb-4 flex bg-gray-900 py-1 pr-4 font-bold">
-    <div class="ml-4 text-white">{{ currentTime }}</div>
-    <h1 class="ml-auto tracking-wide text-white">WORK LOG</h1>
+  <div class="mb-4 flex gap-4 bg-gray-900 px-4 py-1 tracking-wide text-white">
+    <RouterLink to="/" class="font-bold hover:underline">WORK LOG</RouterLink>
+    <div>/</div>
+    <RouterLink to="/projects" class="hover:underline">Projects</RouterLink>
+    <div>/</div>
+    <RouterLink to="/tags" class="hover:underline">Tags</RouterLink>
+    <div>/</div>
+    <RouterLink to="/sessions" class="hover:underline">Sessions</RouterLink>
+    <div class="ml-auto">{{ currentTime }}</div>
   </div>
 </template>
