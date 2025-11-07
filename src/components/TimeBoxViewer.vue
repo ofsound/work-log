@@ -49,7 +49,6 @@ const timeBoxDuration = computed(() => {
       (timeBox.value?.endTime.toDate().valueOf() - timeBox.value?.startTime.toDate().valueOf()) /
       60000
   }
-
   return durationString + 'm'
 })
 

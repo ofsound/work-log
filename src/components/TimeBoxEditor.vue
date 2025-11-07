@@ -1,20 +1,26 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 const props = defineProps({
   id: { type: String, required: true },
+  startTimeFromTimer: String,
+  endTimeFromTimer: String,
 })
 
-import { db, projectsCollection, tagsCollection } from '@/firebase'
+// how to handle id or no ID smarter
 
-import { doc } from 'firebase/firestore'
+import { doc, updateDoc, addDoc, Timestamp } from 'firebase/firestore'
 
 import { useCollection, useDocument } from 'vuefire'
+
+import { db, timeBoxesCollection, projectsCollection, tagsCollection } from '@/firebase'
 
 const allProjects = useCollection(projectsCollection)
 const allTags = useCollection(tagsCollection)
 
-const { data: timeBox, promise } = useDocument(doc(db, 'timeBoxes', props.id))
+const timeBoxRef = doc(db, 'timeBoxes', props.id)
+
+const { data: timeBox, promise } = useDocument(timeBoxRef)
 
 const dynamicStartTime = ref('')
 const dynamicEndTime = ref('')
@@ -40,13 +46,55 @@ promise.value
       dynamicEndTime.value = formatToDatetimeLocal(timeBox.value.endTime.toDate())
       dynamicProject.value = timeBox.value.project
       dynamicTags.value = timeBox.value.tags
-
-      console.log(dynamicTags.value)
     }
   })
   .catch((error) => {
     console.error('Error loading document:', error)
   })
+
+const updateTimeBoxDocument = async () => {
+  try {
+    await updateDoc(timeBoxRef, {
+      startTime: Timestamp.fromDate(new Date(dynamicStartTime.value)),
+      endTime: Timestamp.fromDate(new Date(dynamicEndTime.value)),
+      notes: dynamicNotes.value,
+      project: dynamicProject.value,
+      tags: dynamicTags.value,
+    })
+    console.log('Document updated with ID: ', timeBoxRef.id)
+  } catch (e) {
+    console.error('Error updating document: ', e)
+  }
+}
+
+const createTimeBoxDocument = async () => {
+  try {
+    const docRef = await addDoc(timeBoxesCollection, {
+      startTime: Timestamp.fromDate(new Date(dynamicStartTime.value)),
+      endTime: Timestamp.fromDate(new Date(dynamicEndTime.value)),
+      notes: dynamicNotes.value,
+      project: dynamicProject.value,
+      tags: dynamicTags.value,
+    })
+    console.log('Document added with ID: ', docRef.id)
+  } catch (e) {
+    console.error('Error adding document: ', e)
+  }
+}
+
+watch(
+  () => props.startTimeFromTimer,
+  (newValue) => {
+    if (newValue) dynamicStartTime.value = newValue
+  },
+)
+
+watch(
+  () => props.endTimeFromTimer,
+  (newValue) => {
+    if (newValue) dynamicEndTime.value = newValue
+  },
+)
 </script>
 
 <template>
@@ -77,7 +125,6 @@ promise.value
     </div>
     <div class="flex border-b-1 border-gray-400 py-4">
       <div class="w-16">Tags:</div>
-
       <span v-for="thisTag in allTags" :key="thisTag.id">
         <label>
           <input class="ml-4" type="checkbox" :value="thisTag.id" v-model="dynamicTags" />
@@ -85,5 +132,14 @@ promise.value
         </label>
       </span>
     </div>
+    <div class="mt-12">
+      <button @click="updateTimeBoxDocument">update</button>
+    </div>
   </div>
+  <button
+    @click="createTimeBoxDocument"
+    class="w-full rounded-sm bg-gray-400 p-2 font-bold tracking-wide text-white shadow-[inset_0_2px_0_rgba(255,255,255,0.3),inset_0_-2px_0_rgba(20,20,20,0.1),0_4px_6px_rgba(0,0,0,0.1)]"
+  >
+    Log Session
+  </button>
 </template>
