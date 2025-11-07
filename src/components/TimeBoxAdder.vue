@@ -66,7 +66,6 @@ const formatToDatetimeLocal = (date: Date) => {
       <div class="w-16">End:</div>
       <input type="datetime-local" v-model="endTime" placeholder="start" />
     </div>
-
     <div class="flex border-b-1 border-gray-400 py-4">
       <textarea
         class="w-full rounded-sm border-1 border-gray-800 p-2"

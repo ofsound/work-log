@@ -7,14 +7,11 @@ const timeBoxes = useCollection(timeBoxesCollection)
 </script>
 
 <template>
-  <TimeBox
-    v-for="item in timeBoxes"
-    :key="item.id"
-    :startTime="item.startTime.toDate()"
-    :endTime="item.endTime.toDate()"
-    :notes="item.notes"
-    :project="item.project"
-    :tags="item.tags"
-    :id="item.id"
-  />
+  <TimeBox v-for="item in timeBoxes" :key="item.id" :id="item.id" />
 </template>
+
+<!-- :startTime="item.startTime.toDate()"
+:endTime="item.endTime.toDate()"
+:notes="item.notes"
+:project="item.project"
+:tags="item.tags" -->
