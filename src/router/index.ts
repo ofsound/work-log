@@ -28,7 +28,6 @@ const router = createRouter({
     name: 'sessions',
     component: SessionsView
   }
-
   ],
 })
 

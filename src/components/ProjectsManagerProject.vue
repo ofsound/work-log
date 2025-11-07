@@ -67,7 +67,6 @@ const handleBlur = () => {
       @keyup.esc="cancelRenameAndLoseFocus"
       @blur="handleBlur"
     />
-    <!-- <button @click="renameProjectDocument">rename</button> -->
     <button class="cursor-pointer px-1" @click="deleteProjectDocument">
       <svg
         class="h-5 w-5"

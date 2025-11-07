@@ -15,5 +15,6 @@ const timeBoxes = useCollection(timeBoxesCollection)
     :notes="item.notes"
     :project="item.project"
     :tags="item.tags"
+    :id="item.id"
   />
 </template>
