@@ -2,14 +2,12 @@
 import { ref, watch } from 'vue'
 
 const props = defineProps({
-  id: { type: String, required: true },
+  id: String,
   startTimeFromTimer: String,
   endTimeFromTimer: String,
 })
 
-// how to handle id or no ID smarter
-
-import { doc, updateDoc, addDoc, Timestamp } from 'firebase/firestore'
+import { doc, updateDoc, addDoc, Timestamp, type DocumentReference } from 'firebase/firestore'
 
 import { useCollection, useDocument } from 'vuefire'
 
@@ -18,39 +16,34 @@ import { db, timeBoxesCollection, projectsCollection, tagsCollection } from '@/f
 const allProjects = useCollection(projectsCollection)
 const allTags = useCollection(tagsCollection)
 
-const timeBoxRef = doc(db, 'timeBoxes', props.id)
-
-const { data: timeBox, promise } = useDocument(timeBoxRef)
-
 const dynamicStartTime = ref('')
 const dynamicEndTime = ref('')
 const dynamicNotes = ref('')
 const dynamicProject = ref('')
 const dynamicTags = ref([])
 
-const formatToDatetimeLocal = (date: Date) => {
-  const year = date.getFullYear()
-  const month = (date.getMonth() + 1).toString().padStart(2, '0')
-  const day = date.getDate().toString().padStart(2, '0')
-  const hours = date.getHours().toString().padStart(2, '0')
-  const minutes = date.getMinutes().toString().padStart(2, '0')
+let timeBoxRef: DocumentReference
 
-  return `${year}-${month}-${day}T${hours}:${minutes}`
+if (props.id) {
+  timeBoxRef = doc(db, 'timeBoxes', props.id)
+  const docBinding = useDocument(timeBoxRef)
+
+  const timeBox = docBinding.data
+
+  docBinding.promise.value
+    .then(() => {
+      if (timeBox.value) {
+        dynamicNotes.value = timeBox.value.notes
+        dynamicStartTime.value = formatToDatetimeLocal(timeBox.value.startTime.toDate())
+        dynamicEndTime.value = formatToDatetimeLocal(timeBox.value.endTime.toDate())
+        dynamicProject.value = timeBox.value.project
+        dynamicTags.value = timeBox.value.tags
+      }
+    })
+    .catch((error) => {
+      console.error('Error loading document:', error)
+    })
 }
-
-promise.value
-  .then(() => {
-    if (timeBox.value) {
-      dynamicNotes.value = timeBox.value.notes
-      dynamicStartTime.value = formatToDatetimeLocal(timeBox.value.startTime.toDate())
-      dynamicEndTime.value = formatToDatetimeLocal(timeBox.value.endTime.toDate())
-      dynamicProject.value = timeBox.value.project
-      dynamicTags.value = timeBox.value.tags
-    }
-  })
-  .catch((error) => {
-    console.error('Error loading document:', error)
-  })
 
 const updateTimeBoxDocument = async () => {
   try {
@@ -95,6 +88,16 @@ watch(
     if (newValue) dynamicEndTime.value = newValue
   },
 )
+
+const formatToDatetimeLocal = (date: Date) => {
+  const year = date.getFullYear()
+  const month = (date.getMonth() + 1).toString().padStart(2, '0')
+  const day = date.getDate().toString().padStart(2, '0')
+  const hours = date.getHours().toString().padStart(2, '0')
+  const minutes = date.getMinutes().toString().padStart(2, '0')
+
+  return `${year}-${month}-${day}T${hours}:${minutes}`
+}
 </script>
 
 <template>
@@ -132,11 +135,12 @@ watch(
         </label>
       </span>
     </div>
-    <div class="mt-12">
+    <div v-if="props.id" class="mt-12">
       <button @click="updateTimeBoxDocument">update</button>
     </div>
   </div>
   <button
+    v-if="!props.id"
     @click="createTimeBoxDocument"
     class="w-full rounded-sm bg-gray-400 p-2 font-bold tracking-wide text-white shadow-[inset_0_2px_0_rgba(255,255,255,0.3),inset_0_-2px_0_rgba(20,20,20,0.1),0_4px_6px_rgba(0,0,0,0.1)]"
   >

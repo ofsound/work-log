@@ -32,5 +32,5 @@ const setEndTime = (timeFromTimer: Date) => {
     <CountupTimer @setStartTime="setStartTime" @setEndTime="setEndTime" />
     <CountdownTimer @setStartTime="setStartTime" @setEndTime="setEndTime" />
   </div>
-  <TimeBoxEditor :id="'maybethisshouldnotbehere'" :startTimeFromTimer :endTimeFromTimer />
+  <TimeBoxEditor :startTimeFromTimer :endTimeFromTimer />
 </template>
