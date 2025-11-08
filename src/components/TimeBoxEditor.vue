@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted, onBeforeUnmount } from 'vue'
 
 const props = defineProps({
   id: String,
@@ -101,6 +101,20 @@ const formatToDatetimeLocal = (date: Date) => {
 
   return `${year}-${month}-${day}T${hours}:${minutes}`
 }
+
+const handleEscape = (event: { key: string }) => {
+  if (event.key === 'Escape') {
+    emit('toggleEditor')
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('keydown', handleEscape)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('keydown', handleEscape)
+})
 </script>
 
 <template>
@@ -131,12 +145,12 @@ const formatToDatetimeLocal = (date: Date) => {
     </div>
     <div class="flex border-b-1 border-gray-400 py-4">
       <div class="w-16">Tags:</div>
-      <span v-for="thisTag in allTags" :key="thisTag.id">
-        <label>
-          <input class="ml-4" type="checkbox" :value="thisTag.id" v-model="dynamicTags" />
+      <div class="flex gap-4">
+        <label v-for="thisTag in allTags" :key="thisTag.id" class="flex gap-2">
+          <input type="checkbox" :value="thisTag.id" v-model="dynamicTags" />
           {{ thisTag.name }}
         </label>
-      </span>
+      </div>
     </div>
     <div v-if="props.id" class="!mt-6 flex gap-3">
       <button @click="emit('toggleEditor')" class="ml-auto block rounded-sm border px-1">
