@@ -11,6 +11,8 @@ const props = defineProps({
   id: { type: String, required: true },
 })
 
+const emit = defineEmits(['toggleEditor'])
+
 const allProjects = useCollection(projectsCollection)
 const allTags = useCollection(tagsCollection)
 
@@ -96,7 +98,15 @@ const deleteTimeBoxDocument = async () => {
 
 <template>
   <div class="relative my-4 rounded-sm bg-gray-200 px-6 py-4 shadow-md">
-    <button class="absolute right-2 cursor-pointer px-1" @click="deleteTimeBoxDocument">
+    <button @click="emit('toggleEditor')" class="absolute right-4 bottom-3 cursor-pointer px-1">
+      <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path
+          fill="currentColor"
+          d="M15.728 9.686l-1.414-1.414L5 17.586V19h1.414l9.314-9.314zm1.414-1.414l1.414-1.414-1.414-1.414-1.414 1.414 1.414 1.414zM7.242 21H3v-4.243L16.435 3.322a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414L7.243 21z"
+        />
+      </svg>
+    </button>
+    <button @click="deleteTimeBoxDocument" class="absolute right-4 cursor-pointer px-1">
       <svg
         class="h-5 w-5"
         fill="none"

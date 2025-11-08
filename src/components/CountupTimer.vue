@@ -3,7 +3,7 @@ import { ref } from 'vue'
 
 const emit = defineEmits(['setStartTime', 'setEndTime'])
 
-const timerProgress = ref('')
+const timerProgress = ref('00:00')
 let nowWhenStarted: Date
 
 let timerInterval: number = 0
@@ -41,8 +41,8 @@ const formatSecondsToMinutesSeconds = (totalSeconds: number) => {
 
 <template>
   <div class="my-4 rounded-sm border border-gray-100 bg-green-200 px-6 py-4 shadow-md">
-    <button class="border px-2" @click="startTimer">Start Timer</button>
+    <button v-if="timerInterval === 0" class="border px-2" @click="startTimer">Start Timer</button>
     <div class="mt-2">{{ timerProgress }}</div>
-    <button class="mt-2 border px-2" @click="endTimer">End Timer</button>
+    <button v-if="timerInterval !== 0" class="mt-2 border px-2" @click="endTimer">End Timer</button>
   </div>
 </template>

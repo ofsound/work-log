@@ -9,9 +9,3 @@ const timeBoxes = useCollection(timeBoxesCollection)
 <template>
   <TimeBox v-for="item in timeBoxes" :key="item.id" :id="item.id" />
 </template>
-
-<!-- :startTime="item.startTime.toDate()"
-:endTime="item.endTime.toDate()"
-:notes="item.notes"
-:project="item.project"
-:tags="item.tags" -->

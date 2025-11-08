@@ -7,6 +7,8 @@ const props = defineProps({
   endTimeFromTimer: String,
 })
 
+const emit = defineEmits(['toggleEditor'])
+
 import { doc, updateDoc, addDoc, Timestamp, type DocumentReference } from 'firebase/firestore'
 
 import { useCollection, useDocument } from 'vuefire'
@@ -54,6 +56,7 @@ const updateTimeBoxDocument = async () => {
       project: dynamicProject.value,
       tags: dynamicTags.value,
     })
+    emit('toggleEditor')
     console.log('Document updated with ID: ', timeBoxRef.id)
   } catch (e) {
     console.error('Error updating document: ', e)
@@ -135,8 +138,11 @@ const formatToDatetimeLocal = (date: Date) => {
         </label>
       </span>
     </div>
-    <div v-if="props.id" class="mt-12">
-      <button @click="updateTimeBoxDocument">update</button>
+    <div v-if="props.id" class="!mt-6 flex gap-3">
+      <button @click="emit('toggleEditor')" class="ml-auto block rounded-sm border px-1">
+        cancel
+      </button>
+      <button @click="updateTimeBoxDocument" class="block rounded-sm border px-1">update</button>
     </div>
   </div>
   <button
