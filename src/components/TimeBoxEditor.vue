@@ -48,18 +48,25 @@ if (props.id) {
 }
 
 const updateTimeBoxDocument = async () => {
-  try {
-    await updateDoc(timeBoxRef, {
-      startTime: Timestamp.fromDate(new Date(dynamicStartTime.value)),
-      endTime: Timestamp.fromDate(new Date(dynamicEndTime.value)),
-      notes: dynamicNotes.value,
-      project: dynamicProject.value,
-      tags: dynamicTags.value,
-    })
+  const confirmed = window.confirm(`Are you sure you want to update this Time Box?`)
+
+  if (confirmed) {
+    try {
+      await updateDoc(timeBoxRef, {
+        startTime: Timestamp.fromDate(new Date(dynamicStartTime.value)),
+        endTime: Timestamp.fromDate(new Date(dynamicEndTime.value)),
+        notes: dynamicNotes.value,
+        project: dynamicProject.value,
+        tags: dynamicTags.value,
+      })
+      emit('toggleEditor')
+      console.log('Document updated with ID: ', timeBoxRef.id)
+    } catch (e) {
+      console.error('Error updating document: ', e)
+    }
+  } else {
     emit('toggleEditor')
-    console.log('Document updated with ID: ', timeBoxRef.id)
-  } catch (e) {
-    console.error('Error updating document: ', e)
+    console.log('Update cancelled.')
   }
 }
 
