@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
+import { formatSecondsToMinutesSeconds } from '@/utils/formatters.ts'
+
 const emit = defineEmits(['setStartTime', 'setEndTime'])
 
 const timerProgress = ref('00:00')
@@ -26,16 +28,6 @@ const updateTime = () => {
   const timeElapsedSinceStart = now.valueOf() - nowWhenStarted.valueOf()
 
   timerProgress.value = formatSecondsToMinutesSeconds(Math.round(timeElapsedSinceStart / 1000))
-}
-
-const formatSecondsToMinutesSeconds = (totalSeconds: number) => {
-  const minutes = Math.floor(totalSeconds / 60)
-  const seconds = totalSeconds % 60
-
-  const formattedMinutes = String(minutes).padStart(2, '0')
-  const formattedSeconds = String(seconds).padStart(2, '0')
-
-  return `${formattedMinutes}:${formattedSeconds}`
 }
 </script>
 
