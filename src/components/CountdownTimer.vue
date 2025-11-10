@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
 
 import { formatSecondsToMinutesSeconds } from '@/utils/formatters.ts'
 
@@ -37,6 +38,14 @@ const updateTime = () => {
 
   timerProgress.value = formatSecondsToMinutesSeconds(timerLength.value - secondsElapsed)
 }
+
+const route = useRoute()
+
+onMounted(() => {
+  if (route.path === '/pomodoro') {
+    startTimer()
+  }
+})
 </script>
 
 <template>

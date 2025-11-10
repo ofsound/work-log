@@ -8,26 +8,32 @@ import SessionsView from '@/views/SessionsView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [{
-    path: '/',
-    name: 'new',
-    component: NewView
-  },
-  {
-    path: '/projects',
-    name: 'projects',
-    component: ProjectsView
-  },
-  {
-    path: '/tags',
-    name: 'tags',
-    component: TagsView
-  },
-  {
-    path: '/sessions',
-    name: 'sessions',
-    component: SessionsView
-  }
+  routes: [
+    {
+      path: '/',
+      name: 'new',
+      component: NewView
+    },
+    {
+      path: '/pomodoro',
+      name: 'pomodoro',
+      component: NewView
+    },
+    {
+      path: '/projects',
+      name: 'projects',
+      component: ProjectsView
+    },
+    {
+      path: '/tags',
+      name: 'tags',
+      component: TagsView
+    },
+    {
+      path: '/sessions',
+      name: 'sessions',
+      component: SessionsView
+    }
   ],
 })
 
