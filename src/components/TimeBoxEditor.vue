@@ -90,14 +90,22 @@ const createTimeBoxDocument = async () => {
 watch(
   () => props.startTimeFromTimer,
   (newValue) => {
-    if (newValue) dynamicStartTime.value = newValue
+    if (newValue) {
+      dynamicStartTime.value = newValue
+    } else {
+      dynamicStartTime.value = ''
+    }
   },
 )
 
 watch(
   () => props.endTimeFromTimer,
   (newValue) => {
-    if (newValue) dynamicEndTime.value = newValue
+    if (newValue) {
+      dynamicEndTime.value = newValue
+    } else {
+      dynamicEndTime.value = ''
+    }
   },
 )
 

@@ -17,12 +17,27 @@ const setStartTime = (timeFromTimer: Date) => {
 const setEndTime = (timeFromTimer: Date) => {
   endTimeFromTimer.value = formatToDatetimeLocal(timeFromTimer)
 }
+
+const resetStartAndEndTimes = () => {
+  console.log('here')
+
+  startTimeFromTimer.value = ''
+  endTimeFromTimer.value = ''
+}
 </script>
 
 <template>
   <div class="flex gap-2 *:flex-1">
-    <CountdownTimer @setStartTime="setStartTime" @setEndTime="setEndTime" />
-    <CountupTimer @setStartTime="setStartTime" @setEndTime="setEndTime" />
+    <CountdownTimer
+      @setStartTime="setStartTime"
+      @setEndTime="setEndTime"
+      @resetStartAndEndTimes="resetStartAndEndTimes"
+    />
+    <CountupTimer
+      @setStartTime="setStartTime"
+      @setEndTime="setEndTime"
+      @resetStartAndEndTimes="resetStartAndEndTimes"
+    />
   </div>
   <TimeBoxEditor :startTimeFromTimer :endTimeFromTimer />
 </template>
