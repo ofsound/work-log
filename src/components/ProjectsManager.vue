@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, type Ref } from 'vue'
+import { computed, ref, type Ref } from 'vue'
 
 import { useCollection } from 'vuefire'
 
@@ -15,18 +15,34 @@ const myInput: Ref<HTMLInputElement | null> = ref(null)
 
 const allProjects = useCollection(projectsCollection)
 
+const sortedAllProjects = computed(() => {
+  return allProjects.value.slice().sort((a, b) => {
+    const aValue = a['name']
+    const bValue = b['name']
+
+    if (typeof aValue === 'string') {
+      return aValue.localeCompare(bValue)
+    }
+    return aValue - bValue
+  })
+})
+
 const newProjectName = ref('')
 
 const createProjectDocument = async () => {
-  try {
-    const docRef = await addDoc(projectsCollection, {
-      name: newProjectName.value,
-      slug: slugify(newProjectName.value, { lower: true, strict: true }),
-    })
-    newProjectName.value = ''
-    console.log('Document added with ID: ', docRef.id)
-  } catch (e) {
-    console.error('Error adding document: ', e)
+  if (newProjectName.value) {
+    try {
+      const docRef = await addDoc(projectsCollection, {
+        name: newProjectName.value,
+        slug: slugify(newProjectName.value, { lower: true, strict: true }),
+      })
+      newProjectName.value = ''
+      console.log('Document added with ID: ', docRef.id)
+    } catch (e) {
+      console.error('Error adding document: ', e)
+    }
+  } else {
+    console.error('Name field empty!')
   }
 }
 
@@ -42,7 +58,7 @@ const cancelCreateAndLoseFocus = () => {
   <div class="my-4 rounded-sm bg-blue-200 px-6 py-4 shadow-md">
     <div class="mb-2 text-center text-xl font-bold uppercase">Projects</div>
     <ProjectsManagerProject
-      v-for="item in allProjects"
+      v-for="item in sortedAllProjects"
       :key="item.id"
       :name="item.name"
       :id="item.id"
