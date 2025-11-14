@@ -52,7 +52,7 @@ const updateTime = () => {
       class="h-10 rounded-xl border bg-white px-3 font-bold"
       @click="endTimer"
     >
-      End Timer
+      Stop Timer
     </button>
   </div>
 </template>
