@@ -82,9 +82,18 @@ const createTimeBoxDocument = async () => {
       tags: dynamicTags.value,
     })
     console.log('Document added with ID: ', docRef.id)
+    resetTimeBoxEditor()
   } catch (e) {
     console.error('Error adding document: ', e)
   }
+}
+
+const resetTimeBoxEditor = () => {
+  dynamicStartTime.value = ''
+  dynamicEndTime.value = ''
+  dynamicProject.value = ''
+  dynamicNotes.value = ''
+  dynamicTags.value = []
 }
 
 watch(
