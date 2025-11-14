@@ -4,6 +4,7 @@ import NewView from '@/views/NewView.vue'
 import ProjectsView from '@/views/ProjectsView.vue'
 import TagsView from '@/views/TagsView.vue'
 import SessionsView from '@/views/SessionsView.vue'
+import ProjectView from '@/views/ProjectView.vue'
 
 
 const router = createRouter({
@@ -33,7 +34,13 @@ const router = createRouter({
       path: '/sessions',
       name: 'sessions',
       component: SessionsView
-    }
+    },
+    {
+      path: '/project/:slug',
+      name: 'project',
+      component: ProjectView,
+      props: true
+    },
   ],
 })
 

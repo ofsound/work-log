@@ -19,8 +19,6 @@ const setEndTime = (timeFromTimer: Date) => {
 }
 
 const resetStartAndEndTimes = () => {
-  console.log('here')
-
   startTimeFromTimer.value = ''
   endTimeFromTimer.value = ''
 }
