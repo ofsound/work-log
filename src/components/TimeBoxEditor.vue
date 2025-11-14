@@ -73,18 +73,28 @@ const updateTimeBoxDocument = async () => {
 }
 
 const createTimeBoxDocument = async () => {
-  try {
-    const docRef = await addDoc(timeBoxesCollection, {
-      startTime: Timestamp.fromDate(new Date(dynamicStartTime.value)),
-      endTime: Timestamp.fromDate(new Date(dynamicEndTime.value)),
-      notes: dynamicNotes.value,
-      project: dynamicProject.value,
-      tags: dynamicTags.value,
-    })
-    console.log('Document added with ID: ', docRef.id)
-    resetTimeBoxEditor()
-  } catch (e) {
-    console.error('Error adding document: ', e)
+  if (
+    dynamicStartTime.value &&
+    dynamicEndTime.value &&
+    dynamicNotes.value &&
+    dynamicProject.value &&
+    dynamicTags.value
+  ) {
+    try {
+      const docRef = await addDoc(timeBoxesCollection, {
+        startTime: Timestamp.fromDate(new Date(dynamicStartTime.value)),
+        endTime: Timestamp.fromDate(new Date(dynamicEndTime.value)),
+        notes: dynamicNotes.value,
+        project: dynamicProject.value,
+        tags: dynamicTags.value,
+      })
+      console.log('Document added with ID: ', docRef.id)
+      resetTimeBoxEditor()
+    } catch (e) {
+      console.error('Error adding document: ', e)
+    }
+  } else {
+    console.error("A field in the TimeBox isn't filled out.")
   }
 }
 
