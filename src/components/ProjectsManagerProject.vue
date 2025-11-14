@@ -59,12 +59,12 @@ const handleBlur = () => {
 </script>
 
 <template>
-  <div class="flex gap-2 border-b-1 border-black/20 py-1">
+  <div class="flex gap-2 border-b border-black/20 py-1">
     <input
       ref="myInput"
       type="text"
       v-model="dynamicName"
-      class="hover: flex-1 p-1 font-bold hover:underline focus:bg-white focus:!no-underline"
+      class="hover: flex-1 p-1 font-bold hover:underline focus:bg-white focus:no-underline!"
       @keyup.enter="renameProjectDocument"
       @keyup.esc="cancelRenameAndLoseFocus"
       @blur="handleBlur"

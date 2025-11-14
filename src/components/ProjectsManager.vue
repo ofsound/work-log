@@ -3,6 +3,8 @@ import { ref, type Ref } from 'vue'
 
 import { useCollection } from 'vuefire'
 
+import slugify from 'slugify'
+
 import { addDoc } from 'firebase/firestore'
 
 import { projectsCollection } from '@/firebase'
@@ -19,6 +21,7 @@ const createProjectDocument = async () => {
   try {
     const docRef = await addDoc(projectsCollection, {
       name: newProjectName.value,
+      slug: slugify(newProjectName.value, { lower: true, strict: true }),
     })
     newProjectName.value = ''
     console.log('Document added with ID: ', docRef.id)
