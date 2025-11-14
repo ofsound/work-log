@@ -6,6 +6,7 @@ import TimeBoxEditor from '@/components/TimeBoxEditor.vue'
 
 defineProps({
   id: { type: String, required: true },
+  variant: String,
 })
 
 const showEditor = ref(false)
@@ -16,6 +17,6 @@ const toggleEditor = () => {
 </script>
 
 <template>
-  <TimeBoxViewer v-if="!showEditor" @toggleEditor="toggleEditor" :id />
-  <TimeBoxEditor v-if="showEditor" @toggleEditor="toggleEditor" :id />
+  <TimeBoxViewer v-if="!showEditor" @toggleEditor="toggleEditor" :id :variant />
+  <TimeBoxEditor v-if="showEditor" @toggleEditor="toggleEditor" :id :variant />
 </template>

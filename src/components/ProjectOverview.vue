@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { useCollection } from 'vuefire'
+import { useCollection, useDocument } from 'vuefire'
 import TimeBox from '@/components/TimeBox.vue'
-import { timeBoxesCollection } from '@/firebase'
+import { db, timeBoxesCollection } from '@/firebase'
+import { doc } from 'firebase/firestore'
 
 const props = defineProps({
   id: { type: String, required: true },
 })
+
+const project = useDocument(doc(db, 'projects', props.id))
 
 const timeBoxes = useCollection(timeBoxesCollection)
 
@@ -35,5 +38,6 @@ const sortedProjectTimeBoxes = computed(() => {
 </script>
 
 <template>
-  <TimeBox v-for="item in sortedProjectTimeBoxes" :key="item.id" :id="item.id" />
+  <div class="mb-10 text-center text-4xl font-bold">{{ project?.name }}</div>
+  <TimeBox v-for="item in sortedProjectTimeBoxes" :key="item.id" :id="item.id" variant="project" />
 </template>

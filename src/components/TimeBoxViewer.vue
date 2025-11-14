@@ -13,6 +13,7 @@ import EditIcon from '@/icons/EditIcon.vue'
 
 const props = defineProps({
   id: { type: String, required: true },
+  variant: String,
 })
 
 const emit = defineEmits(['toggleEditor'])
@@ -112,8 +113,10 @@ const deleteTimeBoxDocument = async () => {
       <div class="w-max rounded-sm text-2xl font-bold">
         {{ timeBoxDuration }}
       </div>
-      <div class="relative -top-0.5 font-bold">–</div>
-      <div class="relative -top-px text-xl font-bold">{{ projectName }}</div>
+      <div v-if="variant !== 'project'">
+        <div class="relative -top-0.5 font-bold">–</div>
+        <div class="relative -top-px text-xl font-bold">{{ projectName }}</div>
+      </div>
     </div>
     <div class="font-data mt-4">{{ startDayFormatted }}</div>
     <div class="font-data mt-1">{{ startTimeFormatted }} – {{ endTimeFormatted }}</div>
