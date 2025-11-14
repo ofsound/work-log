@@ -156,22 +156,9 @@ watch(
 watch(
   () => dynamicDuration.value,
   () => {
-    console.log(dynamicStartTime.value)
-    console.log(dynamicDuration.value)
-    // console.log(dynamicEndTime.value)
-
-    const startTimeDate = new Date(dynamicStartTime.value)
-
-    console.log(startTimeDate.getMinutes() + dynamicDuration.value)
-
-    startTimeDate.setMinutes(startTimeDate.getMinutes() + Number(dynamicDuration.value))
-
-    // console.log(startTimeDate)
-
-    dynamicEndTime.value = formatToDatetimeLocal(startTimeDate)
-
-    // newDatetimeLocalString = document.getElementById('newDatetimeLocalInput').value =
-    //   newDatetimeLocalString
+    const tempDate = new Date(dynamicStartTime.value)
+    tempDate.setMinutes(tempDate.getMinutes() + Number(dynamicDuration.value))
+    dynamicEndTime.value = formatToDatetimeLocal(tempDate)
   },
 )
 
