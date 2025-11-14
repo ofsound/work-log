@@ -1,15 +1,15 @@
 <script setup lang="ts">
+import { useCollection } from 'vuefire'
+
+import { collection, query, where, limit } from 'firebase/firestore'
+
+import { db } from '@/firebase'
+
 import ProjectOverview from '@/components/ProjectOverview.vue'
 
 const props = defineProps({
   slug: String,
 })
-
-import { useCollection } from 'vuefire'
-
-import { db } from '@/firebase'
-
-import { collection, query, where, limit } from 'firebase/firestore'
 
 const postQuery = query(collection(db, 'projects'), where('slug', '==', props.slug), limit(1))
 
