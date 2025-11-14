@@ -32,9 +32,27 @@ const updateTime = () => {
 </script>
 
 <template>
-  <div class="my-4 rounded-sm border border-gray-100 bg-green-200 px-6 py-4 shadow-md">
-    <button v-if="timerInterval === 0" class="border px-2" @click="startTimer">Start Timer</button>
-    <div class="mt-2">{{ timerProgress }}</div>
-    <button v-if="timerInterval !== 0" class="mt-2 border px-2" @click="endTimer">End Timer</button>
+  <div
+    class="my-4 flex max-w-90 items-center justify-between rounded-sm border border-gray-100 bg-green-400 px-6 py-4 shadow-md"
+  >
+    <div
+      class="font-data h-max rounded-sm border border-gray-300 bg-white px-2 py-1 text-5xl font-bold tabular-nums"
+    >
+      {{ timerProgress }}
+    </div>
+    <button
+      v-if="timerInterval === 0"
+      class="h-10 rounded-xl border bg-white px-3 font-bold"
+      @click="startTimer"
+    >
+      Start Timer
+    </button>
+    <button
+      v-if="timerInterval !== 0"
+      class="h-10 rounded-xl border bg-white px-3 font-bold"
+      @click="endTimer"
+    >
+      End Timer
+    </button>
   </div>
 </template>

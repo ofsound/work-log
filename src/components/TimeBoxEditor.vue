@@ -117,14 +117,16 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="my-4 rounded-sm border border-gray-100 bg-amber-100 px-6 py-4 shadow-md [&>*]:my-2">
+  <div
+    class="font-data my-4 rounded-sm border border-gray-100 bg-amber-100 px-6 py-4 shadow-md [&>*]:my-2"
+  >
     <div class="flex">
-      <div class="w-16">Start:</div>
-      <input type="datetime-local" placeholder="start" v-model="dynamicStartTime" />
+      <div class="w-16 font-bold">Start:</div>
+      <input type="datetime-local" v-model="dynamicStartTime" />
     </div>
     <div class="flex">
-      <div class="w-16">End:</div>
-      <input type="datetime-local" placeholder="start" v-model="dynamicEndTime" />
+      <div class="w-16 font-bold">End:</div>
+      <input type="datetime-local" v-model="dynamicEndTime" />
     </div>
     <div class="flex border-b-1 border-gray-400 py-4">
       <textarea
@@ -135,7 +137,7 @@ onBeforeUnmount(() => {
       ></textarea>
     </div>
     <div class="flex border-b-1 border-gray-400 py-4">
-      <div class="w-16">Project:</div>
+      <div class="w-16 font-bold">Project:</div>
       <select v-model="dynamicProject">
         <option v-for="thisProject in allProjects" :key="thisProject.id" :value="thisProject.id">
           {{ thisProject.name }}
@@ -143,7 +145,7 @@ onBeforeUnmount(() => {
       </select>
     </div>
     <div class="flex border-b-1 border-gray-400 py-4">
-      <div class="w-16">Tags:</div>
+      <div class="w-16 font-bold">Tags:</div>
       <div class="flex gap-4">
         <label v-for="thisTag in allTags" :key="thisTag.id" class="flex gap-2">
           <input type="checkbox" :value="thisTag.id" v-model="dynamicTags" />
@@ -161,7 +163,7 @@ onBeforeUnmount(() => {
   <button
     v-if="!props.id"
     @click="createTimeBoxDocument"
-    class="w-full rounded-sm bg-gray-400 p-2 font-bold tracking-wide text-white shadow-[inset_0_2px_0_rgba(255,255,255,0.3),inset_0_-2px_0_rgba(20,20,20,0.1),0_4px_6px_rgba(0,0,0,0.1)]"
+    class="w-full rounded-sm bg-gray-400 p-2 font-bold tracking-wide text-black shadow-[inset_0_2px_0_rgba(255,255,255,0.3),inset_0_-2px_0_rgba(20,20,20,0.1),0_4px_6px_rgba(80,80,80,0.37)]"
   >
     Log Session
   </button>

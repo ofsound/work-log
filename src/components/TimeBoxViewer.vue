@@ -115,14 +115,14 @@ const deleteTimeBoxDocument = async () => {
       <div class="relative -top-0.5 font-bold">–</div>
       <div class="relative -top-px text-xl font-bold">{{ projectName }}</div>
     </div>
-    <div class="mt-4">{{ startDayFormatted }}</div>
-    <div class="mt-1">{{ startTimeFormatted }} – {{ endTimeFormatted }}</div>
-    <div class="my-5">{{ timeBox?.notes }}</div>
+    <div class="font-data mt-4">{{ startDayFormatted }}</div>
+    <div class="font-data mt-1">{{ startTimeFormatted }} – {{ endTimeFormatted }}</div>
+    <div class="font-data my-5">{{ timeBox?.notes }}</div>
     <div class="flex gap-2">
       <div
         v-for="thisTag in tagNames"
         :key="thisTag"
-        class="rounded-xl bg-gray-300 px-3 py-0.5 text-sm"
+        class="font-data rounded-xl bg-gray-300 px-3 py-0.5 text-sm"
       >
         {{ thisTag }}
       </div>

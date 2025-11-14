@@ -21,8 +21,8 @@ const setEndTime = (timeFromTimer: Date) => {
 
 <template>
   <div class="flex gap-2 [&>*]:flex-1">
-    <CountupTimer @setStartTime="setStartTime" @setEndTime="setEndTime" />
     <CountdownTimer @setStartTime="setStartTime" @setEndTime="setEndTime" />
+    <CountupTimer @setStartTime="setStartTime" @setEndTime="setEndTime" />
   </div>
   <TimeBoxEditor :startTimeFromTimer :endTimeFromTimer />
 </template>
