@@ -26,6 +26,8 @@ const dynamicNotes = ref('')
 const dynamicProject = ref('')
 const dynamicTags = ref([])
 
+const dynamicDuration = ref()
+
 let timeBoxRef: DocumentReference
 
 if (props.id) {
@@ -106,6 +108,20 @@ const resetTimeBoxEditor = () => {
   dynamicTags.value = []
 }
 
+const timeBoxDuration = () => {
+  const date1 = new Date(dynamicStartTime.value)
+  const date2 = new Date(dynamicEndTime.value)
+
+  const differenceInMilliseconds = date2.getTime() - date1.getTime()
+  const differenceInMinutes = differenceInMilliseconds / (1000 * 60)
+
+  return differenceInMinutes
+}
+
+// const adjustedEndTimeValue = () {
+
+// }
+
 watch(
   () => props.startTimeFromTimer,
   (newValue) => {
@@ -128,6 +144,37 @@ watch(
   },
 )
 
+watch(
+  () => [dynamicStartTime.value, dynamicEndTime.value],
+  () => {
+    if (dynamicStartTime.value && dynamicEndTime.value) {
+      dynamicDuration.value = timeBoxDuration()
+    }
+  },
+)
+
+watch(
+  () => dynamicDuration.value,
+  () => {
+    console.log(dynamicStartTime.value)
+    console.log(dynamicDuration.value)
+    // console.log(dynamicEndTime.value)
+
+    const startTimeDate = new Date(dynamicStartTime.value)
+
+    console.log(startTimeDate.getMinutes() + dynamicDuration.value)
+
+    startTimeDate.setMinutes(startTimeDate.getMinutes() + Number(dynamicDuration.value))
+
+    // console.log(startTimeDate)
+
+    dynamicEndTime.value = formatToDatetimeLocal(startTimeDate)
+
+    // newDatetimeLocalString = document.getElementById('newDatetimeLocalInput').value =
+    //   newDatetimeLocalString
+  },
+)
+
 const handleEscape = (event: { key: string }) => {
   if (event.key === 'Escape') {
     emit('toggleEditor')
@@ -147,13 +194,21 @@ onBeforeUnmount(() => {
   <div
     class="font-data my-4 rounded-sm border border-gray-100 bg-amber-100 px-6 py-4 shadow-md *:my-2"
   >
-    <div class="flex">
-      <div class="w-16 font-bold">Start:</div>
-      <input type="datetime-local" v-model="dynamicStartTime" />
-    </div>
-    <div class="flex">
-      <div class="w-16 font-bold">End:</div>
-      <input type="datetime-local" v-model="dynamicEndTime" />
+    <div class="flex justify-between">
+      <div>
+        <div class="flex">
+          <div class="w-16 font-bold">Start:</div>
+          <input type="datetime-local" v-model="dynamicStartTime" />
+        </div>
+        <div class="flex">
+          <div class="w-16 font-bold">End:</div>
+          <input type="datetime-local" v-model="dynamicEndTime" />
+        </div>
+      </div>
+      <input
+        class="font-data relative h-max w-26 rounded-sm border border-gray-300 bg-white px-2.5 py-1 text-right text-5xl font-bold tabular-nums"
+        v-model="dynamicDuration"
+      />
     </div>
     <div class="flex border-b border-gray-400 py-4">
       <textarea

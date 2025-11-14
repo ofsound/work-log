@@ -113,7 +113,7 @@ const deleteTimeBoxDocument = async () => {
       <div class="w-max rounded-sm text-2xl font-bold">
         {{ timeBoxDuration }}
       </div>
-      <div v-if="variant !== 'project'">
+      <div v-if="variant !== 'project'" class="flex items-baseline gap-2">
         <div class="relative -top-0.5 font-bold">–</div>
         <div class="relative -top-px text-xl font-bold">{{ projectName }}</div>
       </div>
