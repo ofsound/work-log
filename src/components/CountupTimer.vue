@@ -33,7 +33,7 @@ const updateTime = () => {
 
 <template>
   <div
-    class="my-4 flex max-w-90 items-center justify-between rounded-sm border border-gray-100 bg-green-400 px-6 py-4 shadow-md"
+    class="my-4 flex max-w-90 items-center justify-between rounded-sm border border-gray-400/50 bg-green-400 px-6 py-4 shadow-md"
   >
     <div
       class="font-data h-max rounded-sm border border-gray-300 bg-white px-2 py-1 text-5xl font-bold tabular-nums"

@@ -108,7 +108,7 @@ const deleteTimeBoxDocument = async () => {
     <button @click="deleteTimeBoxDocument" class="absolute right-4 cursor-pointer px-1">
       <DeleteIcon />
     </button>
-    <div class="flex items-baseline gap-2 border-b-1 pb-2">
+    <div class="flex items-baseline gap-2 border-b pb-2">
       <div class="w-max rounded-sm text-2xl font-bold">
         {{ timeBoxDuration }}
       </div>

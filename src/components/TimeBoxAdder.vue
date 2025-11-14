@@ -20,7 +20,7 @@ const setEndTime = (timeFromTimer: Date) => {
 </script>
 
 <template>
-  <div class="flex gap-2 [&>*]:flex-1">
+  <div class="flex gap-2 *:flex-1">
     <CountdownTimer @setStartTime="setStartTime" @setEndTime="setEndTime" />
     <CountupTimer @setStartTime="setStartTime" @setEndTime="setEndTime" />
   </div>
