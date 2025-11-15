@@ -52,7 +52,7 @@ const cancelCreateAndLoseFocus = () => {
 </script>
 
 <template>
-  <div class="my-4 rounded-sm bg-purple-200 px-6 py-4 shadow-md">
+  <div class="my-4 rounded-sm border border-gray-400/30 bg-purple-200 px-6 py-4 shadow-md">
     <div class="mb-2 text-center text-xl font-bold uppercase">Tags</div>
     <TagsManagerTag v-for="item in sortedAllTags" :key="item.id" :name="item.name" :id="item.id" />
     <div class="mt-8 flex">
@@ -64,8 +64,11 @@ const cancelCreateAndLoseFocus = () => {
         @keyup.enter="createTagDocument"
         @keyup.esc="cancelCreateAndLoseFocus"
       />
-      <button class="w-max rounded-sm border px-2 font-bold" @click="createTagDocument">
-        + New Tag
+      <button
+        class="pointer-cursor ml-auto block w-max rounded-md bg-slate-600 px-3 py-1 tracking-wide text-white"
+        @click="createTagDocument"
+      >
+        + Create Tag
       </button>
     </div>
   </div>

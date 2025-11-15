@@ -14,6 +14,7 @@ import EditIcon from '@/icons/EditIcon.vue'
 const props = defineProps({
   id: { type: String, required: true },
   variant: String,
+  isMinimized: Boolean,
 })
 
 const emit = defineEmits(['toggleEditor'])
@@ -102,7 +103,10 @@ const deleteTimeBoxDocument = async () => {
 </script>
 
 <template>
-  <div class="relative my-4 rounded-sm bg-gray-200 px-6 py-4 shadow-md">
+  <div
+    v-if="!isMinimized"
+    class="relative my-4 rounded-sm border border-gray-400/20 bg-gray-200 px-6 py-4 shadow-md"
+  >
     <button @click="emit('toggleEditor')" class="absolute right-4 bottom-3 cursor-pointer px-1">
       <EditIcon />
     </button>
@@ -129,6 +133,20 @@ const deleteTimeBoxDocument = async () => {
       >
         {{ thisTag }}
       </div>
+    </div>
+  </div>
+  <div
+    v-if="isMinimized"
+    class="relative my-4 rounded-sm border border-gray-400/20 bg-gray-200 px-6 py-2.5 shadow-md"
+  >
+    <div class="flex items-baseline gap-2">
+      <div class="w-max rounded-sm font-bold">
+        {{ timeBoxDuration }}
+      </div>
+      <div v-if="variant !== 'project'" class="flex shrink-0 items-baseline gap-2">
+        <div class="relative shrink-0 font-bold">{{ projectName }}</div>
+      </div>
+      <div class="font-data ml-3 text-sm">{{ timeBox?.notes }}</div>
     </div>
   </div>
 </template>

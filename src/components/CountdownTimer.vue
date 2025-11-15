@@ -67,7 +67,7 @@ onMounted(() => {
 
 <template>
   <div
-    class="my-4 flex max-w-90 items-center justify-between rounded-sm border border-gray-400/50 bg-green-400 px-6 py-4 shadow-md"
+    class="my-4 flex max-w-90 items-center justify-between rounded-sm border border-gray-400/30 bg-green-400 px-6 py-4 shadow-md"
   >
     <div
       class="font-data relative h-max rounded-sm border border-gray-300 bg-white px-2.5 py-1 text-5xl font-bold tabular-nums"
@@ -90,21 +90,21 @@ onMounted(() => {
     </div>
     <button
       v-if="!timerIsRunning"
-      class="h-10 cursor-pointer rounded-xl border border-gray-300 bg-white px-3 font-bold"
+      class="h-10 cursor-pointer rounded-xl border border-gray-300 bg-white px-3 font-bold tracking-wide"
       @click="startTimer"
     >
       Start Timer
     </button>
     <button
       v-if="timerIsRunning && !timerIsPaused"
-      class="h-10 cursor-pointer rounded-xl border border-gray-300 bg-white px-3 font-bold"
+      class="h-10 cursor-pointer rounded-xl border border-gray-300 bg-white px-3 font-bold tracking-wide"
       @click="pauseTimer"
     >
       Pause Timer
     </button>
     <button
       v-if="timerIsPaused"
-      class="h-10 cursor-pointer rounded-xl border border-gray-300 bg-white px-3 font-bold"
+      class="h-10 cursor-pointer rounded-xl border border-gray-300 bg-white px-3 font-bold tracking-wide"
       @click="resumeTimer"
     >
       Resume Timer

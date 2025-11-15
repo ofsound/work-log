@@ -11,12 +11,14 @@ defineProps({
 
 const showEditor = ref(false)
 
+const isMinimized = ref(true)
+
 const toggleEditor = () => {
   showEditor.value = !showEditor.value
 }
 </script>
 
 <template>
-  <TimeBoxViewer v-if="!showEditor" @toggleEditor="toggleEditor" :id :variant />
+  <TimeBoxViewer v-if="!showEditor" @toggleEditor="toggleEditor" :id :variant :isMinimized />
   <TimeBoxEditor v-if="showEditor" @toggleEditor="toggleEditor" :id :variant />
 </template>

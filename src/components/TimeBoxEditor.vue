@@ -118,10 +118,6 @@ const timeBoxDuration = () => {
   return differenceInMinutes
 }
 
-// const adjustedEndTimeValue = () {
-
-// }
-
 watch(
   () => props.startTimeFromTimer,
   (newValue) => {
@@ -179,16 +175,16 @@ onBeforeUnmount(() => {
 
 <template>
   <div
-    class="font-data my-4 rounded-sm border border-gray-100 bg-amber-100 px-6 py-4 shadow-md *:my-2"
+    class="font-data my-4 rounded-sm border border-gray-400/20 bg-amber-100 px-6 py-4 shadow-md *:my-2"
   >
     <div class="flex justify-between">
-      <div>
+      <div class="flex flex-col gap-1">
         <div class="flex">
-          <div class="w-16 font-bold">Start:</div>
+          <div class="w-18 font-bold">Start:</div>
           <input type="datetime-local" v-model="dynamicStartTime" />
         </div>
         <div class="flex">
-          <div class="w-16 font-bold">End:</div>
+          <div class="w-18 font-bold">End:</div>
           <input type="datetime-local" v-model="dynamicEndTime" />
         </div>
       </div>
@@ -206,15 +202,22 @@ onBeforeUnmount(() => {
       ></textarea>
     </div>
     <div class="flex border-b border-gray-400 py-4">
-      <div class="w-16 font-bold">Project:</div>
-      <select v-model="dynamicProject">
-        <option v-for="thisProject in allProjects" :key="thisProject.id" :value="thisProject.id">
+      <div class="w-18 font-bold">Project:</div>
+      <div class="project-radio-group">
+        <label v-for="thisProject in allProjects" :key="thisProject.id" class="mb-1 block">
+          <input
+            type="radio"
+            v-model="dynamicProject"
+            :value="thisProject.id"
+            name="projectSelection"
+            class="mr-1.5"
+          />
           {{ thisProject.name }}
-        </option>
-      </select>
+        </label>
+      </div>
     </div>
-    <div class="flex border-b border-gray-400 py-4">
-      <div class="w-16 font-bold">Tags:</div>
+    <div class="flex py-4 pb-1">
+      <div class="w-18 font-bold">Tags:</div>
       <div class="flex gap-4">
         <label v-for="thisTag in allTags" :key="thisTag.id" class="flex gap-2">
           <input type="checkbox" :value="thisTag.id" v-model="dynamicTags" />
@@ -223,16 +226,24 @@ onBeforeUnmount(() => {
       </div>
     </div>
     <div v-if="props.id" class="mt-6! flex gap-3">
-      <button @click="emit('toggleEditor')" class="ml-auto block rounded-sm border px-1">
-        cancel
+      <button
+        @click="emit('toggleEditor')"
+        class="pointer-cursor ml-auto block rounded-md bg-slate-600 px-3 py-1 text-white"
+      >
+        Cancel
       </button>
-      <button @click="updateTimeBoxDocument" class="block rounded-sm border px-1">update</button>
+      <button
+        @click="updateTimeBoxDocument"
+        class="pointer-cursor block rounded-md bg-slate-600 px-3 py-1 text-white"
+      >
+        Update
+      </button>
     </div>
   </div>
   <button
     v-if="!props.id"
     @click="createTimeBoxDocument"
-    class="w-full rounded-sm bg-gray-300 p-2 font-bold tracking-wide text-black shadow-[inset_0_2px_0_rgba(255,255,255,0.3),inset_0_-2px_0_rgba(20,20,20,0.1),0_4px_6px_rgba(80,80,80,0.37)]"
+    class="w-full cursor-pointer rounded-sm bg-slate-600 p-3 font-bold tracking-wider text-white shadow-[inset_0_2px_0_rgba(255,255,255,0.3),inset_0_-1px_0_rgba(20,20,20,0.1),0_3px_4px_rgba(80,80,80,0.37)]"
   >
     Log Session
   </button>

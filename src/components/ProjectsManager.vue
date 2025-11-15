@@ -55,7 +55,7 @@ const cancelCreateAndLoseFocus = () => {
 </script>
 
 <template>
-  <div class="my-4 rounded-sm bg-blue-200 px-6 py-4 shadow-md">
+  <div class="my-4 rounded-sm border border-gray-400/30 bg-blue-200 px-6 py-4 shadow-md">
     <div class="mb-2 text-center text-xl font-bold uppercase">Projects</div>
     <ProjectsManagerProject
       v-for="item in sortedAllProjects"
@@ -72,8 +72,11 @@ const cancelCreateAndLoseFocus = () => {
         @keyup.enter="createProjectDocument"
         @keyup.esc="cancelCreateAndLoseFocus"
       />
-      <button class="w-max rounded-sm border px-2 font-bold" @click="createProjectDocument">
-        + New Project
+      <button
+        class="pointer-cursor ml-auto block w-max rounded-md bg-slate-600 px-3 py-1 tracking-wide text-white"
+        @click="createProjectDocument"
+      >
+        + Create Project
       </button>
     </div>
   </div>
