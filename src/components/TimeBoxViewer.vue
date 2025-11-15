@@ -135,10 +135,7 @@ const deleteTimeBoxDocument = async () => {
       </div>
     </div>
   </div>
-  <div
-    v-if="isMinimized"
-    class="relative my-4 rounded-sm border border-gray-400/20 bg-gray-200 px-6 py-2.5 shadow-md"
-  >
+  <div v-if="isMinimized" class="">
     <div class="flex items-baseline gap-2">
       <div class="w-max rounded-sm font-bold">
         {{ timeBoxDuration }}
