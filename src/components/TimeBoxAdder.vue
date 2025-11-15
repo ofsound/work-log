@@ -32,6 +32,7 @@ const resetStartAndEndTimes = () => {
       @resetStartAndEndTimes="resetStartAndEndTimes"
     />
     <CountupTimer
+      class="blur-[2px] grayscale-100"
       @setStartTime="setStartTime"
       @setEndTime="setEndTime"
       @resetStartAndEndTimes="resetStartAndEndTimes"

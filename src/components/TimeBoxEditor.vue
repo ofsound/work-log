@@ -175,33 +175,33 @@ onBeforeUnmount(() => {
 
 <template>
   <div
-    class="font-data my-4 rounded-sm border border-gray-400/20 bg-amber-100 px-6 py-4 shadow-md *:my-2"
+    class="font-data my-4 rounded-sm border border-gray-400/20 bg-amber-100 px-6 py-4 shadow-md grayscale-10 *:my-2"
   >
-    <div class="flex justify-between">
+    <div class="flex gap-15">
+      <input
+        class="font-data relative h-max w-21.5 rounded-sm border border-gray-400 bg-white px-2.5 py-1 text-right text-4xl font-bold tabular-nums"
+        v-model="dynamicDuration"
+      />
       <div class="flex flex-col gap-1">
         <div class="flex">
           <div class="w-18 font-bold">Start:</div>
-          <input type="datetime-local" v-model="dynamicStartTime" />
+          <input type="datetime-local" v-model="dynamicStartTime" class="font-data" />
         </div>
         <div class="flex">
           <div class="w-18 font-bold">End:</div>
           <input type="datetime-local" v-model="dynamicEndTime" />
         </div>
       </div>
-      <input
-        class="font-data relative h-max w-26 rounded-sm border border-gray-300 bg-white px-2.5 py-1 text-right text-5xl font-bold tabular-nums"
-        v-model="dynamicDuration"
-      />
     </div>
-    <div class="flex border-b border-gray-400 py-4">
+    <div class="flex py-4">
       <textarea
-        class="w-full rounded-sm border border-gray-800 p-2"
+        class="w-full rounded-sm border border-gray-400 bg-white p-2"
         rows="5"
         placeholder="Enter notes here..."
         v-model="dynamicNotes"
       ></textarea>
     </div>
-    <div class="flex border-b border-gray-400 py-4">
+    <div class="flex border-b border-gray-200 py-4">
       <div class="w-18 font-bold">Project:</div>
       <div class="project-radio-group">
         <label v-for="thisProject in allProjects" :key="thisProject.id" class="mb-1 block">
