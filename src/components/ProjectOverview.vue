@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
 import { useCollection, useDocument } from 'vuefire'
-import TimeBox from '@/components/TimeBox.vue'
 import { db, timeBoxesCollection } from '@/firebase'
 import { doc, type DocumentData } from 'firebase/firestore'
 
@@ -52,8 +51,7 @@ watch(
       innerArray?.push(timeBox)
       const timeBoxDateString = timeBox.startTime.toDate().toDateString()
 
-      if (timeBoxDateString === prevDateString) {
-      } else {
+      if (timeBoxDateString !== prevDateString) {
         projectOverviewDayObjectsIndex++
         projectOverviewDayObjects.value[projectOverviewDayObjectsIndex] = []
       }
@@ -66,22 +64,9 @@ watch(
 
 <template>
   <div class="mb-10 text-center text-4xl font-bold">{{ project?.name }}</div>
-
   <ProjectOverviewDay
     v-for="(item, index) in projectOverviewDayObjects"
     :key="index"
     :projectOverviewDayData="item"
   />
-
-  <div v-for="item in sortedProjectTimeBoxes" :key="item.id" class="hidden">
-    {{
-      item.startTime.toDate().toLocaleDateString([], {
-        weekday: 'long',
-        year: '2-digit',
-        month: '2-digit',
-        day: '2-digit',
-      })
-    }}
-    <TimeBox :id="item.id" variant="project" />
-  </div>
 </template>

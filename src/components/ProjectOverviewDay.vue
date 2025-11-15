@@ -10,7 +10,7 @@ defineProps<{
 <template>
   {{
     projectOverviewDayData[0]?.startTime.toDate().toLocaleDateString([], {
-      weekday: 'short',
+      weekday: 'long',
       year: '2-digit',
       month: '2-digit',
       day: '2-digit',
