@@ -1,22 +1,26 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch, type Ref } from 'vue'
 
-import type { Ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 import { doc, deleteDoc, updateDoc } from 'firebase/firestore'
 
 import { db } from '@/firebase'
 
 import DeleteIcon from '@/icons/DeleteIcon.vue'
-
-const myInput: Ref<HTMLInputElement | null> = ref(null)
+import EditIcon from '@/icons/EditIcon.vue'
 
 const props = defineProps({
   name: String,
+  slug: String,
   id: { type: String, required: true },
 })
 
+const router = useRouter()
+const myInput: Ref<HTMLInputElement | null> = ref(null)
 const dynamicName = ref(props.name)
+
+const isNameEditMode = ref(false)
 
 const deleteProjectDocument = async () => {
   const confirmed = window.confirm(`Are you sure you want to delete the project: ${props.name}?`)
@@ -40,6 +44,7 @@ const renameProjectDocument = async () => {
     await updateDoc(docRef, { name: dynamicName.value })
     if (myInput.value) {
       myInput.value.blur()
+      isNameEditMode.value = false
     }
     console.log('Document deleted with ID: ', docRef.id)
   } catch (e) {
@@ -49,6 +54,7 @@ const renameProjectDocument = async () => {
 
 const cancelRenameAndLoseFocus = () => {
   if (myInput.value) {
+    isNameEditMode.value = false
     myInput.value.blur()
   }
 }
@@ -56,19 +62,40 @@ const cancelRenameAndLoseFocus = () => {
 const handleBlur = () => {
   dynamicName.value = props.name
 }
+
+watch(
+  () => isNameEditMode.value,
+  (newValue) => {
+    if (newValue && myInput.value) {
+      myInput.value.focus()
+    }
+  },
+  { flush: 'post' },
+)
 </script>
 
 <template>
   <div class="flex gap-2 border-b border-black/20 py-1">
     <input
+      v-if="isNameEditMode"
       ref="myInput"
       type="text"
       v-model="dynamicName"
-      class="hover: flex-1 p-1 font-bold hover:underline focus:bg-white focus:no-underline!"
+      class="flex-1 p-1 font-bold hover:underline focus:bg-white focus:no-underline!"
       @keyup.enter="renameProjectDocument"
       @keyup.esc="cancelRenameAndLoseFocus"
       @blur="handleBlur"
     />
+    <button
+      v-if="!isNameEditMode"
+      @click="router.push(`/project/${slug}`)"
+      class="pointer-cursor flex-1 p-1 text-left font-bold"
+    >
+      {{ dynamicName }}
+    </button>
+    <button class="cursor-pointer px-1" @click="isNameEditMode = !isNameEditMode">
+      <EditIcon />
+    </button>
     <button class="cursor-pointer px-1" @click="deleteProjectDocument">
       <DeleteIcon />
     </button>

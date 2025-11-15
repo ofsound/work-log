@@ -61,6 +61,7 @@ const cancelCreateAndLoseFocus = () => {
       v-for="item in sortedAllProjects"
       :key="item.id"
       :name="item.name"
+      :slug="item.slug"
       :id="item.id"
     />
     <div class="mt-8 flex">
