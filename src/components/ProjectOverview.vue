@@ -43,12 +43,9 @@ watch(
   () => sortedProjectTimeBoxes.value,
   (newValue) => {
     projectOverviewDayObjects.value[0] = <DocumentData[]>[]
-    let projectOverviewDayObjectsIndex = 0
+    let projectOverviewDayObjectsIndex = -1
     let prevDateString = ''
     newValue.forEach((timeBox) => {
-      const innerArray = projectOverviewDayObjects.value[projectOverviewDayObjectsIndex]
-
-      innerArray?.push(timeBox)
       const timeBoxDateString = timeBox.startTime.toDate().toDateString()
 
       if (timeBoxDateString !== prevDateString) {
@@ -57,6 +54,9 @@ watch(
       }
 
       prevDateString = timeBoxDateString
+
+      const innerArray = projectOverviewDayObjects.value[projectOverviewDayObjectsIndex]
+      innerArray?.push(timeBox)
     })
   },
 )

@@ -137,14 +137,17 @@ const deleteTimeBoxDocument = async () => {
   </div>
   <div
     v-if="isMinimized"
-    class="mb-2 flex items-baseline gap-2 border-b border-gray-200 last:border-0"
+    class="mb-2.5 flex items-baseline gap-2 border-b border-gray-200 last:border-0"
   >
     <div v-if="variant !== 'project'" class="flex shrink-0 items-baseline gap-2">
       <div class="relative shrink-0 font-bold">{{ projectName }}</div>
     </div>
     <div class="font-data pb-2">
       {{ timeBox?.notes }}
-      <span class="ml-2 text-xs font-bold italic">{{ timeBoxDuration }}</span>
+      <span class="ml-2 text-xs font-bold italic"
+        ><span class="text-gray-400">[</span> {{ timeBoxDuration }}
+        <span class="text-gray-400">]</span></span
+      >
     </div>
   </div>
 </template>

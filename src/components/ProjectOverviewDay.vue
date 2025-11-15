@@ -45,12 +45,12 @@ const dayDuration = () => {
       }}
     </div>
     <div
-      class="font-data mx-2 mt-2 mb-3 w-max rounded-md border bg-neutral-800 px-1.5 py-0.5 text-sm tracking-wide text-white"
+      class="font-data mt-1.5 mr-2 mb-3 ml-2.5 w-max rounded-md border bg-emerald-800 px-1.5 py-0.5 pt-px text-sm tracking-wide text-white"
     >
       {{ dayDuration() }} hrs
     </div>
     <div
-      class="relative my-4 rounded-sm border border-gray-400/20 bg-gray-100 px-4 py-2.5 pt-4 pb-0 shadow-md"
+      class="relative my-4 rounded-sm border border-gray-400/20 bg-gray-100 px-6 pt-6 pb-3.5 shadow-md"
     >
       <TimeBox
         v-for="item in projectOverviewDayData"
