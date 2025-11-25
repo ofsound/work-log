@@ -103,6 +103,7 @@ const createTimeBoxDocument = async () => {
 const resetTimeBoxEditor = () => {
   dynamicStartTime.value = ''
   dynamicEndTime.value = ''
+  dynamicDuration.value = ''
   dynamicProject.value = ''
   dynamicNotes.value = ''
   dynamicTags.value = []

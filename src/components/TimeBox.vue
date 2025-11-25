@@ -4,14 +4,18 @@ import { ref } from 'vue'
 import TimeBoxViewer from '@/components/TimeBoxViewer.vue'
 import TimeBoxEditor from '@/components/TimeBoxEditor.vue'
 
-defineProps({
+const props = defineProps({
   id: { type: String, required: true },
   variant: String,
 })
 
 const showEditor = ref(false)
 
-const isMinimized = ref(true)
+const isMinimized = ref(false)
+
+if (props.variant === 'project') {
+  isMinimized.value = true
+}
 
 const toggleEditor = () => {
   showEditor.value = !showEditor.value

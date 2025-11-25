@@ -105,7 +105,7 @@ const deleteTimeBoxDocument = async () => {
 <template>
   <div
     v-if="!isMinimized"
-    class="relative my-4 rounded-sm border border-gray-400/20 bg-gray-200 px-6 py-4 shadow-md"
+    class="relative my-4 rounded-sm border border-gray-400/20 bg-slate-100 px-6 py-4 shadow-md"
   >
     <button @click="emit('toggleEditor')" class="absolute right-4 bottom-3 cursor-pointer px-1">
       <EditIcon />
@@ -122,8 +122,10 @@ const deleteTimeBoxDocument = async () => {
         <div class="relative -top-px text-xl font-bold">{{ projectName }}</div>
       </div>
     </div>
-    <div class="font-data mt-4">{{ startDayFormatted }}</div>
-    <div class="font-data mt-1">{{ startTimeFormatted }} – {{ endTimeFormatted }}</div>
+    <div class="font-data mt-3">{{ startDayFormatted }}</div>
+    <div class="font-data mt-px text-sm italic">
+      {{ startTimeFormatted }} &mdash; {{ endTimeFormatted }}
+    </div>
     <div class="font-data my-5">{{ timeBox?.notes }}</div>
     <div class="flex gap-2">
       <div
@@ -131,7 +133,7 @@ const deleteTimeBoxDocument = async () => {
         :key="thisTag"
         class="font-data rounded-xl bg-gray-300 px-3 py-0.5 text-sm"
       >
-        {{ thisTag }}
+        <div class="relative -top-px">{{ thisTag }}</div>
       </div>
     </div>
   </div>
