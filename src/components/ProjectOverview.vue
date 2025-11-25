@@ -6,6 +6,8 @@ import { doc, type DocumentData } from 'firebase/firestore'
 
 import ProjectOverviewDay from './ProjectOverviewDay.vue'
 
+import { formatMinutesToHoursAndMinutes } from '@/utils/formatters.ts'
+
 const props = defineProps({
   id: { type: String, required: true },
 })
@@ -39,6 +41,30 @@ const sortedProjectTimeBoxes = computed(() => {
   })
 })
 
+const projectTimeBoxesTotalDuration = () => {
+  let projectTotalDuration = 0
+
+  const projectTimeBoxes = timeBoxes.value.filter((timeBox) => timeBox.project === props.id)
+
+  projectTimeBoxes.forEach((timeBox: DocumentData) => {
+    if (timeBox.endTime && timeBox.startTime) {
+      console.log(timeBox.endTime)
+
+      const timeBoxDuration =
+        (timeBox.endTime.toDate().valueOf() - timeBox.startTime.toDate().valueOf()) / 60000
+      projectTotalDuration += timeBoxDuration
+    }
+  })
+
+  const { hours, minutes } = formatMinutesToHoursAndMinutes(projectTotalDuration)
+
+  if (hours > 0) {
+    return hours + minutes
+  } else {
+    return minutes
+  }
+}
+
 watch(
   () => sortedProjectTimeBoxes.value,
   (newValue) => {
@@ -63,7 +89,15 @@ watch(
 </script>
 
 <template>
-  <div class="mb-10 text-center text-4xl font-bold">{{ project?.name }}</div>
+  <div class="flex justify-center">
+    <div class="mb-10 text-center text-4xl font-bold">{{ project?.name }}</div>
+    <div
+      class="font-data relative top-1 mt-1.5 mb-3 ml-4 w-max self-start rounded-md border bg-emerald-800 px-1.5 py-0.5 pt-px text-sm tracking-wide text-white"
+    >
+      {{ projectTimeBoxesTotalDuration() }} hrs
+    </div>
+    <div></div>
+  </div>
   <ProjectOverviewDay
     v-for="(item, index) in projectOverviewDayObjects"
     :key="index"

@@ -10,4 +10,20 @@
   --font-sans: 'National Park', 'sans-serif';
   --font-data: 'Lato', 'sans-serif';
   --font-script: 'Caveat', 'sans-serif';
+
+  /* Define a CSS variable for your custom animation */
+  --animate-blink-once: blink-once 0.3s ease-in-out forwards;
+
+  /* Define the @keyframes for the blinking effect */
+  @keyframes blink-once {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
 }

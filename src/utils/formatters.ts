@@ -25,7 +25,7 @@ export const formatMinutesToHoursAndMinutes = (totalMinutes: number) => {
   const hours = Math.floor(totalMinutes / 60);
 
   // Calculate the remaining minutes
-  const minutes = ((totalMinutes % 60) / 60).toString().slice(1);;
+  const minutes = ((totalMinutes % 60) / 60).toString().slice(1).substring(0, 3);
 
 
 

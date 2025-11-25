@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, onMounted, onBeforeUnmount } from 'vue'
+import { ref, watch, onMounted, onBeforeUnmount, computed } from 'vue'
 
 const props = defineProps({
   id: String,
@@ -17,8 +17,36 @@ import { db, timeBoxesCollection, projectsCollection, tagsCollection } from '@/f
 
 import { formatToDatetimeLocal } from '@/utils/formatters.ts'
 
+const timeBoxEditorRef = ref<HTMLElement | null>(null)
+
+const dynamicDurationTypingTimer = ref(-1)
+
 const allProjects = useCollection(projectsCollection)
 const allTags = useCollection(tagsCollection)
+
+const sortedAllProjects = computed(() => {
+  return allProjects.value.slice().sort((a, b) => {
+    const aValue = a['name']
+    const bValue = b['name']
+
+    if (typeof aValue === 'string') {
+      return aValue.localeCompare(bValue)
+    }
+    return aValue - bValue
+  })
+})
+
+const sortedAllTags = computed(() => {
+  return allTags.value.slice().sort((a, b) => {
+    const aValue = a['name']
+    const bValue = b['name']
+
+    if (typeof aValue === 'string') {
+      return aValue.localeCompare(bValue)
+    }
+    return aValue - bValue
+  })
+})
 
 const dynamicStartTime = ref('')
 const dynamicEndTime = ref('')
@@ -91,7 +119,8 @@ const createTimeBoxDocument = async () => {
         tags: dynamicTags.value,
       })
       console.log('Document added with ID: ', docRef.id)
-      resetTimeBoxEditor()
+      timeBoxEditorRef.value!.classList.add('animate-[var(--animate-blink-once)]')
+      setTimeout(resetTimeBoxEditor, 100)
     } catch (e) {
       console.error('Error adding document: ', e)
     }
@@ -107,6 +136,7 @@ const resetTimeBoxEditor = () => {
   dynamicProject.value = ''
   dynamicNotes.value = ''
   dynamicTags.value = []
+  timeBoxEditorRef.value!.classList.remove('animate-[var(--animate-blink-once)]')
 }
 
 const timeBoxDuration = () => {
@@ -153,9 +183,24 @@ watch(
 watch(
   () => dynamicDuration.value,
   () => {
-    const tempDate = new Date(dynamicStartTime.value)
-    tempDate.setMinutes(tempDate.getMinutes() + Number(dynamicDuration.value))
-    dynamicEndTime.value = formatToDatetimeLocal(tempDate)
+    // lc tempDate: Date
+
+    if (dynamicStartTime.value) {
+      const tempDate = new Date(dynamicStartTime.value)
+      tempDate.setMinutes(tempDate.getMinutes() + Number(dynamicDuration.value))
+      dynamicEndTime.value = formatToDatetimeLocal(tempDate)
+    } else {
+      clearTimeout(dynamicDurationTypingTimer.value)
+      dynamicDurationTypingTimer.value = setTimeout(() => {
+        const now = new Date()
+        const tempDate = new Date(
+          now.setMinutes(now.getMinutes() - parseInt(dynamicDuration.value)),
+        )
+        dynamicStartTime.value = formatToDatetimeLocal(tempDate)
+        tempDate.setMinutes(tempDate.getMinutes() + Number(dynamicDuration.value))
+        dynamicEndTime.value = formatToDatetimeLocal(tempDate)
+      }, 400)
+    }
   },
 )
 
@@ -176,6 +221,7 @@ onBeforeUnmount(() => {
 
 <template>
   <div
+    ref="timeBoxEditorRef"
     class="font-data my-4 rounded-sm border border-gray-400/20 bg-amber-100 px-6 py-4 shadow-md grayscale-10 *:my-2"
   >
     <div class="flex gap-15">
@@ -205,7 +251,7 @@ onBeforeUnmount(() => {
     <div class="flex border-b border-gray-200 py-4">
       <div class="w-18 font-bold">Project:</div>
       <div class="project-radio-group">
-        <label v-for="thisProject in allProjects" :key="thisProject.id" class="mb-1 block">
+        <label v-for="thisProject in sortedAllProjects" :key="thisProject.id" class="mb-1 block">
           <input
             type="radio"
             v-model="dynamicProject"
@@ -220,7 +266,7 @@ onBeforeUnmount(() => {
     <div class="flex py-4 pb-1">
       <div class="w-18 font-bold">Tags:</div>
       <div class="flex gap-4">
-        <label v-for="thisTag in allTags" :key="thisTag.id" class="flex gap-2">
+        <label v-for="thisTag in sortedAllTags" :key="thisTag.id" class="flex gap-2">
           <input type="checkbox" :value="thisTag.id" v-model="dynamicTags" />
           {{ thisTag.name }}
         </label>
@@ -244,7 +290,7 @@ onBeforeUnmount(() => {
   <button
     v-if="!props.id"
     @click="createTimeBoxDocument"
-    class="w-full cursor-pointer rounded-sm bg-slate-600 p-3 font-bold tracking-wider text-white shadow-[inset_0_2px_0_rgba(255,255,255,0.3),inset_0_-1px_0_rgba(20,20,20,0.1),0_3px_4px_rgba(80,80,80,0.37)]"
+    class="w-full cursor-pointer rounded-sm bg-slate-600 p-3 font-bold tracking-wider text-white shadow-[inset_0_2px_0_rgba(255,255,255,0.3),inset_0_-1px_0_rgba(20,20,20,0.1),0_3px_4px_rgba(80,80,80,0.37)] hover:brightness-120"
   >
     Log Session
   </button>
