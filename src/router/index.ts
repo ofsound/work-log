@@ -5,6 +5,7 @@ import ProjectsView from '@/views/ProjectsView.vue'
 import TagsView from '@/views/TagsView.vue'
 import SessionsView from '@/views/SessionsView.vue'
 import ProjectView from '@/views/ProjectView.vue'
+import TagView from '@/views/TagView.vue'
 
 
 const router = createRouter({
@@ -39,6 +40,12 @@ const router = createRouter({
       path: '/project/:slug',
       name: 'project',
       component: ProjectView,
+      props: true
+    },
+    {
+      path: '/tag/:slug',
+      name: 'tag',
+      component: TagView,
       props: true
     },
   ],

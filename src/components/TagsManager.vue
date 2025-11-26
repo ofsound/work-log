@@ -3,6 +3,8 @@ import { computed, ref, type Ref } from 'vue'
 
 import { useCollection } from 'vuefire'
 
+import slugify from 'slugify'
+
 import { addDoc } from 'firebase/firestore'
 
 import { tagsCollection } from '@/firebase'
@@ -32,6 +34,7 @@ const createTagDocument = async () => {
     try {
       const docRef = await addDoc(tagsCollection, {
         name: newTagName.value,
+        slug: slugify(newTagName.value, { lower: true, strict: true }),
       })
       newTagName.value = ''
       console.log('Document added with ID: ', docRef.id)
@@ -54,7 +57,13 @@ const cancelCreateAndLoseFocus = () => {
 <template>
   <div class="my-4 rounded-sm border border-gray-400/30 bg-purple-200 px-6 py-4 shadow-md">
     <div class="mb-2 text-center text-xl font-bold uppercase">Tags</div>
-    <TagsManagerTag v-for="item in sortedAllTags" :key="item.id" :name="item.name" :id="item.id" />
+    <TagsManagerTag
+      v-for="item in sortedAllTags"
+      :key="item.id"
+      :name="item.name"
+      :slug="item.slug"
+      :id="item.id"
+    />
     <div class="mt-8 flex">
       <input
         ref="myInput"

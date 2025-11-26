@@ -13,7 +13,7 @@ const showEditor = ref(false)
 
 const isMinimized = ref(false)
 
-if (props.variant === 'project') {
+if (props.variant === 'project' || props.variant === 'tag') {
   isMinimized.value = true
 }
 
@@ -24,5 +24,5 @@ const toggleEditor = () => {
 
 <template>
   <TimeBoxViewer v-if="!showEditor" @toggleEditor="toggleEditor" :id :variant :isMinimized />
-  <TimeBoxEditor v-if="showEditor" @toggleEditor="toggleEditor" :id :variant />
+  <TimeBoxEditor v-if="showEditor" @toggleEditor="toggleEditor" :id />
 </template>

@@ -1,22 +1,26 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch, type Ref } from 'vue'
 
-import type { Ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 import { doc, deleteDoc, updateDoc } from 'firebase/firestore'
 
 import { db } from '@/firebase'
 
 import DeleteIcon from '@/icons/DeleteIcon.vue'
-
-const myInput: Ref<HTMLInputElement | null> = ref(null)
+import EditIcon from '@/icons/EditIcon.vue'
 
 const props = defineProps({
   name: String,
+  slug: String,
   id: { type: String, required: true },
 })
 
+const router = useRouter()
+const myInput: Ref<HTMLInputElement | null> = ref(null)
 const dynamicName = ref(props.name)
+
+const isNameEditMode = ref(false)
 
 const deleteTagDocument = async () => {
   const confirmed = window.confirm(`Are you sure you want to delete the tag: ${props.name}?`)
@@ -56,11 +60,22 @@ const cancelRenameAndLoseFocus = () => {
 const resetNameToSaved = () => {
   dynamicName.value = props.name
 }
+
+watch(
+  () => isNameEditMode.value,
+  (newValue) => {
+    if (newValue && myInput.value) {
+      myInput.value.focus()
+    }
+  },
+  { flush: 'post' },
+)
 </script>
 
 <template>
   <div class="flex gap-2 border-b border-black/20 py-1">
     <input
+      v-if="isNameEditMode"
       ref="myInput"
       type="text"
       v-model="dynamicName"
@@ -69,6 +84,16 @@ const resetNameToSaved = () => {
       @keyup.esc="cancelRenameAndLoseFocus"
       @blur="resetNameToSaved"
     />
+    <button
+      v-if="!isNameEditMode"
+      @click="router.push(`/tag/${slug}`)"
+      class="flex-1 cursor-pointer p-1 text-left font-bold"
+    >
+      {{ dynamicName }}
+    </button>
+    <button class="cursor-pointer px-1" @click="isNameEditMode = !isNameEditMode">
+      <EditIcon />
+    </button>
     <button class="cursor-pointer px-1" @click="deleteTagDocument">
       <DeleteIcon />
     </button>
