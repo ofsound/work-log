@@ -22,7 +22,7 @@ const tagOverviewDayObjects = ref<DocumentData[][]>([[]])
 
 const sortedTagTimeBoxes = computed(() => {
   const tagTimeBoxes = timeBoxes.value.filter((timeBox) => {
-    return timeBox.tags.some((item: string) => item === props.id)
+    return timeBox.tags.some((tagID: string) => tagID === props.id)
   })
 
   return tagTimeBoxes.slice().sort((a, b) => {
@@ -47,7 +47,7 @@ const tagTimeBoxesTotalDuration = () => {
   let tagTotalDuration = 0
 
   const tagTimeBoxes = timeBoxes.value.filter((timeBox) => {
-    return timeBox.tags.some((item: string) => item === props.id)
+    return timeBox.tags.some((tagID: string) => tagID === props.id)
   })
 
   tagTimeBoxes.forEach((timeBox: DocumentData) => {
