@@ -45,7 +45,7 @@ const updateTime = () => {
       class="font-data relative h-max rounded-sm border border-gray-300 bg-white px-2.5 py-1 text-5xl font-bold tabular-nums"
     >
       <button
-        class="absolute -top-3 -left-3 rounded-full border-2 border-gray-300 bg-white p-1 shadow-sm"
+        class="absolute -top-3 -left-3 cursor-pointer rounded-full border-2 border-gray-300 bg-white p-1 shadow-sm"
         @click="cancelTimer"
       >
         <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 100 100">

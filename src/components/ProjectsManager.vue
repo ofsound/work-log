@@ -74,7 +74,7 @@ const cancelCreateAndLoseFocus = () => {
         @keyup.esc="cancelCreateAndLoseFocus"
       />
       <button
-        class="pointer-cursor ml-auto block w-max rounded-md bg-slate-600 px-3 py-1 tracking-wide text-white"
+        class="ml-auto block w-max cursor-pointer rounded-md bg-slate-600 px-3 py-1 tracking-wide text-white"
         @click="createProjectDocument"
       >
         + Create Project

@@ -251,7 +251,11 @@ onBeforeUnmount(() => {
     <div class="flex border-b border-gray-200 py-4">
       <div class="w-18 font-bold">Project:</div>
       <div class="project-radio-group">
-        <label v-for="thisProject in sortedAllProjects" :key="thisProject.id" class="mb-1 block">
+        <label
+          v-for="thisProject in sortedAllProjects"
+          :key="thisProject.id"
+          class="mb-1 block cursor-pointer"
+        >
           <input
             type="radio"
             v-model="dynamicProject"
@@ -266,7 +270,7 @@ onBeforeUnmount(() => {
     <div class="flex py-4 pb-1">
       <div class="w-18 font-bold">Tags:</div>
       <div class="flex gap-4">
-        <label v-for="thisTag in sortedAllTags" :key="thisTag.id" class="flex gap-2">
+        <label v-for="thisTag in sortedAllTags" :key="thisTag.id" class="flex cursor-pointer gap-2">
           <input type="checkbox" :value="thisTag.id" v-model="dynamicTags" />
           {{ thisTag.name }}
         </label>
@@ -275,13 +279,13 @@ onBeforeUnmount(() => {
     <div v-if="props.id" class="mt-6! flex gap-3">
       <button
         @click="emit('toggleEditor')"
-        class="pointer-cursor ml-auto block rounded-md bg-slate-600 px-3 py-1 text-white"
+        class="ml-auto block cursor-pointer rounded-md bg-slate-600 px-3 py-1 text-white"
       >
         Cancel
       </button>
       <button
         @click="updateTimeBoxDocument"
-        class="pointer-cursor block rounded-md bg-slate-600 px-3 py-1 text-white"
+        class="block cursor-pointer rounded-md bg-slate-600 px-3 py-1 text-white"
       >
         Update
       </button>

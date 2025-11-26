@@ -89,7 +89,7 @@ watch(
     <button
       v-if="!isNameEditMode"
       @click="router.push(`/project/${slug}`)"
-      class="pointer-cursor flex-1 p-1 text-left font-bold"
+      class="flex-1 cursor-pointer p-1 text-left font-bold"
     >
       {{ dynamicName }}
     </button>
