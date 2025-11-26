@@ -14,8 +14,6 @@ const dayDuration = () => {
 
   props.projectOverviewDayData.forEach((timeBox) => {
     if (timeBox.endTime && timeBox.startTime) {
-      console.log(timeBox.endTime)
-
       const timeBoxDuration =
         (timeBox.endTime.toDate().valueOf() - timeBox.startTime.toDate().valueOf()) / 60000
       dayDuration += timeBoxDuration

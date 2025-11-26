@@ -17,5 +17,5 @@ const project = useCollection(postQuery, { ssrKey: 'slugCompare' })
 </script>
 
 <template>
-  <ProjectOverview v-if="project[0]" :id="project[0].id" />
+  <ProjectOverview v-if="project[0]" :id="project[0].id" :key="project[0].id" />
 </template>
