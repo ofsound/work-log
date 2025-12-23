@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
+import WelcomeView from '@/views/WelcomeView.vue'
 import NewView from '@/views/NewView.vue'
 import ProjectsView from '@/views/ProjectsView.vue'
 import TagsView from '@/views/TagsView.vue'
@@ -13,6 +14,11 @@ const router = createRouter({
   routes: [
     {
       path: '/',
+      name: 'welcome',
+      component: WelcomeView
+    },
+    {
+      path: '/new',
       name: 'new',
       component: NewView
     },

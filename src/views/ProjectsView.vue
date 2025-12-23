@@ -3,5 +3,7 @@ import ProjectsManager from '@/components/ProjectsManager.vue'
 </script>
 
 <template>
-  <ProjectsManager />
+  <div class="px-11 pt-8 pb-4">
+    <ProjectsManager />
+  </div>
 </template>

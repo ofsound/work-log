@@ -6,6 +6,8 @@ import { doc, type DocumentData } from 'firebase/firestore'
 
 import ProjectOverviewDay from './ProjectOverviewDay.vue'
 
+import { useStore } from '@/stores/store'
+
 import { formatMinutesToHoursAndMinutes } from '@/utils/formatters.ts'
 
 const props = defineProps({
@@ -16,7 +18,7 @@ const project = useDocument(doc(db, 'projects', props.id))
 
 const timeBoxes = useCollection(timeBoxesCollection)
 
-const sortDirection = ref('asc')
+const store = useStore()
 
 const projectOverviewDayObjects = ref<DocumentData[][]>([[]])
 
@@ -27,7 +29,7 @@ const sortedProjectTimeBoxes = computed(() => {
     const aValue = a['startTime']
     const bValue = b['startTime']
 
-    if (sortDirection.value === 'asc') {
+    if (!store.sortOrderReversed) {
       if (typeof aValue === 'string') {
         return aValue.localeCompare(bValue)
       }
@@ -89,16 +91,16 @@ watch(
 <template>
   <div class="flex h-full min-h-0 flex-col">
     <div
-      class="flex h-30 w-full max-w-250 justify-center bg-radial-[at_45%_25%] from-neutral-200 to-slate-400 to-75%"
+      class="flex h-22 w-full max-w-250 items-center justify-center bg-radial-[at_50%_50%] from-neutral-200 to-slate-300 to-85%"
     >
-      <div class="mb-10 text-center text-4xl font-bold">{{ project?.name }}</div>
+      <div class="text-center text-3xl font-bold">{{ project?.name }}</div>
       <div
-        class="font-data relative top-1 mt-1.5 mb-3 ml-4 w-max self-start rounded-md border bg-emerald-800 px-1.5 py-0.5 pt-px text-sm tracking-wide text-white"
+        class="font-data relative top-px ml-4 w-max rounded-md bg-emerald-800 px-1.5 py-0.5 pt-px text-sm tracking-wide text-white"
       >
         {{ projectTimeBoxesTotalDuration() }} hrs
       </div>
     </div>
-    <div class="flex-1 overflow-auto px-11">
+    <div class="flex-1 overflow-auto px-11 pt-8">
       <ProjectOverviewDay
         v-for="(item, index) in projectOverviewDayObjects"
         :key="index"

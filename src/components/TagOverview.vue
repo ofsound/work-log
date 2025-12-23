@@ -6,6 +6,8 @@ import { doc, type DocumentData } from 'firebase/firestore'
 
 import TagOverviewDay from './TagOverviewDay.vue'
 
+import { useStore } from '@/stores/store'
+
 import { formatMinutesToHoursAndMinutes } from '@/utils/formatters.ts'
 
 const props = defineProps({
@@ -16,7 +18,7 @@ const tag = useDocument(doc(db, 'tags', props.id))
 
 const timeBoxes = useCollection(timeBoxesCollection)
 
-const sortDirection = ref('asc')
+const store = useStore()
 
 const tagOverviewDayObjects = ref<DocumentData[][]>([[]])
 
@@ -29,7 +31,7 @@ const sortedTagTimeBoxes = computed(() => {
     const aValue = a['startTime']
     const bValue = b['startTime']
 
-    if (sortDirection.value === 'asc') {
+    if (!store.sortOrderReversed) {
       if (typeof aValue === 'string') {
         return aValue.localeCompare(bValue)
       }
@@ -91,18 +93,23 @@ watch(
 </script>
 
 <template>
-  <div class="flex justify-center">
-    <div class="mb-10 text-center text-4xl font-bold">{{ tag?.name }}</div>
+  <div class="flex h-full min-h-0 flex-col">
     <div
-      class="font-data relative top-1 mt-1.5 mb-3 ml-4 w-max self-start rounded-md border bg-emerald-800 px-1.5 py-0.5 pt-px text-sm tracking-wide text-white"
+      class="flex h-22 w-full max-w-250 items-center justify-center bg-radial-[at_50%_50%] from-neutral-200 to-slate-300 to-85%"
     >
-      {{ tagTimeBoxesTotalDuration() }} hrs
+      <div class="text-center text-3xl font-bold">{{ tag?.name }}</div>
+      <div
+        class="font-data relative top-px ml-4 w-max rounded-md bg-emerald-800 px-1.5 py-0.5 pt-px text-sm tracking-wide text-white"
+      >
+        {{ tagTimeBoxesTotalDuration() }} hrs
+      </div>
     </div>
-    <div></div>
+    <div class="flex-1 overflow-auto px-11 pt-8">
+      <TagOverviewDay
+        v-for="(item, index) in tagOverviewDayObjects"
+        :key="index"
+        :tagOverviewDayData="item"
+      />
+    </div>
   </div>
-  <TagOverviewDay
-    v-for="(item, index) in tagOverviewDayObjects"
-    :key="index"
-    :tagOverviewDayData="item"
-  />
 </template>

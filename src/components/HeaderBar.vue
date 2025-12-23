@@ -1,6 +1,13 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
+import { useStore } from '@/stores/store'
+
+import SortAscending from '@/icons/SortAscending.vue'
+import SortDescending from '@/icons/SortDescending.vue'
+
+const store = useStore()
+
 const currentTime = ref('')
 
 const updateTime = () => {
@@ -17,13 +24,20 @@ setInterval(updateTime, 1000)
   >
     <RouterLink to="/" class="font-bold hover:underline">WORK LOG</RouterLink>
     <div>/</div>
-    <RouterLink to="/" class="">&nbsp;✚&nbsp;</RouterLink>
+    <RouterLink to="/new" class="">&nbsp;✚&nbsp;</RouterLink>
     <div>/</div>
     <RouterLink to="/projects" class="hover:underline">Projects</RouterLink>
     <div>/</div>
     <RouterLink to="/tags" class="hover:underline">Tags</RouterLink>
     <div>/</div>
     <RouterLink to="/sessions" class="hover:underline">Sessions</RouterLink>
-    <div class="ml-auto">{{ currentTime }}</div>
+    <button
+      @click="store.sortOrderReversed = !store.sortOrderReversed"
+      class="mr-2 ml-auto cursor-pointer"
+    >
+      <SortAscending v-if="!store.sortOrderReversed" />
+      <SortDescending v-if="store.sortOrderReversed" />
+    </button>
+    <div>{{ currentTime }}</div>
   </div>
 </template>

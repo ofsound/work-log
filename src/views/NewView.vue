@@ -3,5 +3,7 @@ import TimeBoxAdder from '@/components/TimeBoxAdder.vue'
 </script>
 
 <template>
-  <TimeBoxAdder />
+  <div class="px-11 pb-4">
+    <TimeBoxAdder />
+  </div>
 </template>
