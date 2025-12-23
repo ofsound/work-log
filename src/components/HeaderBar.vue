@@ -12,10 +12,12 @@ setInterval(updateTime, 1000)
 </script>
 
 <template>
-  <div class="fixed z-100 flex w-full gap-3 bg-gray-900 px-4 py-1 tracking-wide text-white">
+  <div
+    class="fixed z-100 flex w-full max-w-250 gap-3 bg-gray-900 px-4 py-1 tracking-wide text-white"
+  >
     <RouterLink to="/" class="font-bold hover:underline">WORK LOG</RouterLink>
     <div>/</div>
-    <RouterLink to="/" class="font-bold">&nbsp;✚&nbsp;</RouterLink>
+    <RouterLink to="/" class="">&nbsp;✚&nbsp;</RouterLink>
     <div>/</div>
     <RouterLink to="/projects" class="hover:underline">Projects</RouterLink>
     <div>/</div>

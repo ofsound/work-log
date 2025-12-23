@@ -87,18 +87,23 @@ watch(
 </script>
 
 <template>
-  <div class="flex justify-center">
-    <div class="mb-10 text-center text-4xl font-bold">{{ project?.name }}</div>
+  <div class="flex h-full min-h-0 flex-col">
     <div
-      class="font-data relative top-1 mt-1.5 mb-3 ml-4 w-max self-start rounded-md border bg-emerald-800 px-1.5 py-0.5 pt-px text-sm tracking-wide text-white"
+      class="flex h-30 w-full max-w-250 justify-center bg-radial-[at_45%_25%] from-neutral-200 to-slate-400 to-75%"
     >
-      {{ projectTimeBoxesTotalDuration() }} hrs
+      <div class="mb-10 text-center text-4xl font-bold">{{ project?.name }}</div>
+      <div
+        class="font-data relative top-1 mt-1.5 mb-3 ml-4 w-max self-start rounded-md border bg-emerald-800 px-1.5 py-0.5 pt-px text-sm tracking-wide text-white"
+      >
+        {{ projectTimeBoxesTotalDuration() }} hrs
+      </div>
     </div>
-    <div></div>
+    <div class="flex-1 overflow-auto px-11">
+      <ProjectOverviewDay
+        v-for="(item, index) in projectOverviewDayObjects"
+        :key="index"
+        :projectOverviewDayData="item"
+      />
+    </div>
   </div>
-  <ProjectOverviewDay
-    v-for="(item, index) in projectOverviewDayObjects"
-    :key="index"
-    :projectOverviewDayData="item"
-  />
 </template>

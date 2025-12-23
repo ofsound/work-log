@@ -4,10 +4,10 @@ import HeaderBar from '@/components/HeaderBar.vue'
 
 <template>
   <div
-    class="mx-auto min-h-screen max-w-250 bg-white bg-[linear-gradient(to_right,#73737320_1px,transparent_1px),linear-gradient(to_bottom,#73737320_1px,transparent_1px)] bg-size-[15px_15px] shadow-sm"
+    class="mx-auto h-dvh max-w-250 bg-white bg-[linear-gradient(to_right,#73737320_1px,transparent_1px),linear-gradient(to_bottom,#73737320_1px,transparent_1px)] bg-size-[15px_15px] shadow-lg shadow-black"
   >
     <HeaderBar />
-    <div class="px-11 pt-16 pb-4">
+    <div class="h-full">
       <RouterView />
     </div>
   </div>
