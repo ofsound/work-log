@@ -19,7 +19,7 @@ const startTimer = () => {
   nowWhenStarted = new Date()
   updateTime()
   timerInterval = setInterval(updateTime, 1000)
-  emit('setStartTime', new Date())
+  emit('setStartTime', new Date(), 'countdown')
   timerIsRunning.value = true
 }
 
