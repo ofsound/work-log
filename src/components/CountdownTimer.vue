@@ -1,18 +1,21 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 
 import TimerButton from '@/components/TimerButton.vue'
 import TimerCancelButton from '@/components/TimerCancelButton.vue'
 
-import { formatSecondsToMinutesSeconds } from '@/utils/formatters.ts'
+import { formatSecondsToMinutesSecondsParts } from '@/utils/formatters.ts'
 
 const emit = defineEmits(['setStartTime', 'setEndTime', 'resetStartAndEndTimes'])
 
 const timerIsRunning = ref(false)
 const timerIsPaused = ref(false)
 const timerProgress = ref('')
+const secondsProgress = ref('00')
 const timerLength = ref(1800)
+
+const dynamicMinutes = ref('30')
 
 let nowWhenStarted: Date
 
@@ -56,12 +59,28 @@ const updateTime = () => {
     stopTimer()
   }
 
-  timerProgress.value = formatSecondsToMinutesSeconds(timerLength.value - secondsElapsed)
+  const { formattedMinutes, formattedSeconds } = formatSecondsToMinutesSecondsParts(
+    timerLength.value - secondsElapsed,
+  )
+
+  timerProgress.value = formattedMinutes + ':' + formattedSeconds
+
+  dynamicMinutes.value = formattedMinutes
+
+  secondsProgress.value = formattedSeconds
 }
+
+watch(
+  () => dynamicMinutes.value,
+  () => {
+    if (!timerIsRunning.value) {
+      timerLength.value = 60 * parseInt(dynamicMinutes.value)
+    }
+  },
+)
 
 onMounted(() => {
   const route = useRoute()
-
   if (route.path === '/pomodoro') {
     startTimer()
   }
@@ -76,11 +95,17 @@ onMounted(() => {
       class="font-data relative h-max rounded-sm border border-gray-300 bg-white px-2.5 py-1 text-5xl font-bold tabular-nums"
     >
       <TimerCancelButton @click="cancelTimer" />
-      <div v-if="!timerIsRunning">
-        {{ formatSecondsToMinutesSeconds(timerLength) }}
-      </div>
-      <div v-else>
-        {{ timerProgress }}
+      <div class="flex items-baseline">
+        <input
+          id="dynamicMinutes"
+          type="text"
+          v-model="dynamicMinutes"
+          @keyup.enter="($event.target as HTMLElement).blur()"
+          @keyup.esc="($event.target as HTMLElement).blur()"
+          class="w-14"
+        />
+        <div class="relative -top-1">:</div>
+        {{ secondsProgress }}
       </div>
     </div>
     <TimerButton v-if="!timerIsRunning" @click="startTimer">Start Timer</TimerButton>

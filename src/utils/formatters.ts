@@ -19,15 +19,21 @@ export const formatSecondsToMinutesSeconds = (totalSeconds: number) => {
   return `${formattedMinutes}:${formattedSeconds}`
 }
 
+export const formatSecondsToMinutesSecondsParts = (totalSeconds: number) => {
+  const minutes = Math.floor(totalSeconds / 60)
+  const seconds = totalSeconds % 60
+
+  const formattedMinutes = String(minutes).padStart(2, '0')
+  const formattedSeconds = String(seconds).padStart(2, '0')
+
+  return { formattedMinutes, formattedSeconds }
+}
+
 
 export const formatMinutesToHoursAndMinutes = (totalMinutes: number) => {
-  // Calculate the number of full hours
   const hours = Math.floor(totalMinutes / 60);
 
-  // Calculate the remaining minutes
   const minutes = ((totalMinutes % 60) / 60).toString().slice(1).substring(0, 3);
-
-
 
   return { hours, minutes };
 }
