@@ -95,7 +95,7 @@ watch(
 <template>
   <div class="flex h-full min-h-0 flex-col">
     <div
-      class="flex h-22 w-full max-w-250 items-center justify-center bg-radial-[at_50%_50%] from-neutral-200 to-slate-300 to-85%"
+      class="relative z-10 flex h-22 w-full max-w-250 items-center justify-center bg-linear-to-br from-slate-800 to-zinc-900 text-white shadow-sm shadow-gray-700"
     >
       <div class="text-center text-3xl font-bold">{{ tag?.name }}</div>
       <div

@@ -254,7 +254,7 @@ onBeforeUnmount(() => {
         <label
           v-for="thisProject in sortedAllProjects"
           :key="thisProject.id"
-          class="mb-1 block cursor-pointer"
+          class="mb-1 block cursor-pointer select-none"
         >
           <input
             type="radio"
@@ -270,7 +270,11 @@ onBeforeUnmount(() => {
     <div class="flex py-4 pb-1">
       <div class="w-18 font-bold">Tags:</div>
       <div class="flex gap-4">
-        <label v-for="thisTag in sortedAllTags" :key="thisTag.id" class="flex cursor-pointer gap-2">
+        <label
+          v-for="thisTag in sortedAllTags"
+          :key="thisTag.id"
+          class="flex cursor-pointer gap-2 select-none"
+        >
           <input type="checkbox" :value="thisTag.id" v-model="dynamicTags" />
           {{ thisTag.name }}
         </label>
