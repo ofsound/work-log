@@ -2,7 +2,7 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
 export const useStore = defineStore('store', () => {
-  const sortOrderReversed = ref(false)
+  const sortOrderReversed = ref(true)
 
   return { sortOrderReversed }
 })
