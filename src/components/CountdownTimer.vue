@@ -2,6 +2,9 @@
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 
+import TimerButton from '@/components/TimerButton.vue'
+import TimerCancelButton from '@/components/TimerCancelButton.vue'
+
 import { formatSecondsToMinutesSeconds } from '@/utils/formatters.ts'
 
 const emit = defineEmits(['setStartTime', 'setEndTime', 'resetStartAndEndTimes'])
@@ -72,42 +75,18 @@ onMounted(() => {
     <div
       class="font-data relative h-max rounded-sm border border-gray-300 bg-white px-2.5 py-1 text-5xl font-bold tabular-nums"
     >
-      <button
-        class="absolute -top-3 -left-3 cursor-pointer rounded-full border-2 border-gray-300 bg-white p-1 shadow-sm hover:border-gray-400"
-        @click="cancelTimer"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 100 100">
-          <line x1="10" y1="10" x2="90" y2="90" stroke="black" stroke-width="20" />
-          <line x1="10" y1="90" x2="90" y2="10" stroke="black" stroke-width="20" />
-        </svg>
-      </button>
+      <TimerCancelButton @click="cancelTimer" />
       <div v-if="!timerIsRunning">
         {{ formatSecondsToMinutesSeconds(timerLength) }}
       </div>
-      <div v-else class="">
+      <div v-else>
         {{ timerProgress }}
       </div>
     </div>
-    <button
-      v-if="!timerIsRunning"
-      class="h-10 cursor-pointer rounded-xl border border-gray-300 bg-white px-3 font-bold tracking-wide hover:border-gray-500 hover:shadow-sm"
-      @click="startTimer"
+    <TimerButton v-if="!timerIsRunning" @click="startTimer">Start Timer</TimerButton>
+    <TimerButton v-if="timerIsRunning && !timerIsPaused" @click="pauseTimer"
+      >Pause Timer</TimerButton
     >
-      Start Timer
-    </button>
-    <button
-      v-if="timerIsRunning && !timerIsPaused"
-      class="h-10 cursor-pointer rounded-xl border border-gray-300 bg-white px-3 font-bold tracking-wide"
-      @click="pauseTimer"
-    >
-      Pause Timer
-    </button>
-    <button
-      v-if="timerIsPaused"
-      class="h-10 cursor-pointer rounded-xl border border-gray-300 bg-white px-3 font-bold tracking-wide"
-      @click="resumeTimer"
-    >
-      Resume Timer
-    </button>
+    <TimerButton v-if="timerIsPaused" @click="resumeTimer">Resume Timer </TimerButton>
   </div>
 </template>
